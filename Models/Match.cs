@@ -18,6 +18,8 @@ namespace Pomocnik_Rozgrywek.Models
         public MatchType Type {  get; set; }
         public Team TeamA { get; set; }
         public Team TeamB { get; set; }
+        public int TeamAID { get; set; }
+        public int TeamBID { get; set; }
         public int TeamAScore { get; set; }
         public int TeamBScore { get; set; }
         public DateTime Time { get; set; }

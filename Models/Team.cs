@@ -12,7 +12,6 @@ namespace Pomocnik_Rozgrywek.Models
         public string TeamName { get; set; }
         public ICollection<Player> Players { get; set; }
 
-        public int TournamentID { get; set; }
-        public Tournament Tournament { get; set; }
+        public ICollection<TournamentTeam> Tournaments { get; set; }
     }
 }
