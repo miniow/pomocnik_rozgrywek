@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Models
 {
-    public enum MatchType
-    {
-        QuaterFinal,
-        SemiFinal,
-        Final
-    }
     public class Match
     {
-        public int MatchID { get; set; }
-        public MatchType Type {  get; set; }
-        public Team TeamA { get; set; }
-        public Team TeamB { get; set; }
-        public int TeamAID { get; set; }
-        public int TeamBID { get; set; }
-        public int TeamAScore { get; set; }
-        public int TeamBScore { get; set; }
-        public DateTime Time { get; set; }
+        public Area Area { get; set; }
+        public Competition Competition { get; set; }
+        public Season Season { get; set; }
 
-        public Tournament Tournament { get; set; }
-        public int TournamentID { get; set; }
+        public int Id { get; set; }
+        public DateTime utcDate { get; set; }
+        public Status Status { get; set; }
+        public int Minute {  get; set; }
+        public int InjuryTime {  get; set; }
+        public int Attendance { get; set; }
+        public string Venue { get; set; }
+        public int Matchday { get; set; }
+        public Stage Stage { get; set; }
+        public Team HomeTeam { get; set; }
+        public Team AwayTeam { get; set; }
+
     }
 }

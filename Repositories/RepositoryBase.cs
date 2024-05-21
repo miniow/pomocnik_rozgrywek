@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pomocnik_Rozgrywek.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,11 @@ namespace Pomocnik_Rozgrywek.Repositories
 {
     public abstract class RepositoryBase
     {
+         protected readonly ApplicationDbContext _db;
+
+        public RepositoryBase()
+        {
+            _db = new ApplicationDbContext();
+        }
     }
 }
