@@ -14,7 +14,6 @@ namespace Pomocnik_Rozgrywek.Repositories
         public async Task<Match> AddAsync(Match match)
         {
             await _db.Matches.AddAsync(match);
-            await _db.SaveChangesAsync();
             return match;
         }
 
