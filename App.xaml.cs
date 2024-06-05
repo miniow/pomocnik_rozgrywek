@@ -6,6 +6,7 @@ using Pomocnik_Rozgrywek.Data;
 using Microsoft.EntityFrameworkCore;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Repositories;
+using Pomocnik_Rozgrywek.Services.Interfaces;
 
 namespace Pomocnik_Rozgrywek
 {
@@ -26,14 +27,15 @@ namespace Pomocnik_Rozgrywek
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PR;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
+            services.AddDbContext<ApplicationDbContext>();
 
             services.AddScoped<ICompetitonRepository, CompetitionRepository>();
             services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IPearsonRepository, PearsonRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
+            services.AddScoped<IAreaRepository, AreaRepository>();
+
 
             services.AddSingleton<MainWindow>();
         }
