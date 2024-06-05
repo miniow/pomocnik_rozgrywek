@@ -12,6 +12,8 @@ namespace Pomocnik_Rozgrywek.Repositories
 {
     public class TeamRepository : RepositoryBase, ITeamRepository
     {
+        public TeamRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+
         public async Task<Team> AddAsync(Team team)
         {
             await _db.Teams.AddAsync(team);

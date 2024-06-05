@@ -11,9 +11,9 @@ namespace Pomocnik_Rozgrywek.Repositories
     {
          protected readonly ApplicationDbContext _db;
 
-        public RepositoryBase()
+        public RepositoryBase(ApplicationDbContext dbContext)
         {
-            _db = new ApplicationDbContext();
+            _db = dbContext;
         }
     }
 }

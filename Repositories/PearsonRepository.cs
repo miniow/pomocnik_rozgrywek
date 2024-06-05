@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pomocnik_Rozgrywek.Data;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using System;
@@ -11,6 +12,8 @@ namespace Pomocnik_Rozgrywek.Repositories
 {
     public class PearsonRepository : RepositoryBase, IPearsonRepository
     {
+        public PearsonRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+
         public async Task<Pearson> AddAsync(Pearson pearson)
         {
             await _db.People.AddAsync(pearson);

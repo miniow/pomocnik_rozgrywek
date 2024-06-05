@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pomocnik_Rozgrywek.Data;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using System;
@@ -11,9 +12,12 @@ namespace Pomocnik_Rozgrywek.Repositories
 {
     public class MatchRepository : RepositoryBase, IMatchRepository
     {
+        public MatchRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+
         public async Task<Match> AddAsync(Match match)
         {
             await _db.Matches.AddAsync(match);
+            await _db.SaveChangesAsync();
             return match;
         }
 

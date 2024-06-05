@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
+using Pomocnik_Rozgrywek.Data;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using System;
@@ -13,6 +14,8 @@ namespace Pomocnik_Rozgrywek.Repositories
 {
     public class SeasonRepository : RepositoryBase, ISeasonRepository
     {
+        public SeasonRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+
         public async Task<Season> AddAsync(Season season)
         {
             await _db.AddAsync(season);
