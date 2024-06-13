@@ -9,10 +9,10 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface IAreaService
     {
-        Area GetAreaById(int id);
-        IEnumerable<Area> GetAllAreas();
-        void CreateArea(Area area);
-        void UpdateArea(Area area);
-        void DeleteArea(int id);
+        Task<Area> GetAreaByIdAsync(int id);
+        Task<IEnumerable<Area>> GetAllAreasAsync();
+        Task<Area> CreateAreaAsync(Area area);
+        Task<Area> UpdateAreaAsync(Area area);
+        Task DeleteAreaAsync(int id);
     }
 }

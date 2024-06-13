@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Services.Interfaces;
+using Pomocnik_Rozgrywek.Services;
 
 namespace Pomocnik_Rozgrywek
 {
@@ -15,7 +16,7 @@ namespace Pomocnik_Rozgrywek
     /// </summary>
     public partial class App : Application
     {
-        private IServiceProvider _serviceProvider;
+        
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -36,6 +37,7 @@ namespace Pomocnik_Rozgrywek
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
 
+            services.AddScoped<IAreaService, AreaService>();
 
             services.AddSingleton<MainWindow>();
         }

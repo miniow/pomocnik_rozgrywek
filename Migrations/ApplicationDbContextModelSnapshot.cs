@@ -112,10 +112,16 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Property<int>("Attendance")
                         .HasColumnType("int");
 
+                    b.Property<int>("AwayStatisticId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AwayTeamId")
                         .HasColumnType("int");
 
                     b.Property<int>("CompetitionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HomeStatisticId")
                         .HasColumnType("int");
 
                     b.Property<int>("HomeTeamId")
@@ -150,15 +156,71 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     b.HasIndex("AreaId");
 
+                    b.HasIndex("AwayStatisticId");
+
                     b.HasIndex("AwayTeamId");
 
                     b.HasIndex("CompetitionId");
+
+                    b.HasIndex("HomeStatisticId");
 
                     b.HasIndex("HomeTeamId");
 
                     b.HasIndex("SeasonId");
 
                     b.ToTable("Matches");
+                });
+
+            modelBuilder.Entity("Pomocnik_Rozgrywek.Models.MatchStatistic", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BallPossession")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CornerKicks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fouls")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FreeKicks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GoalKicks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Offsides")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RedCards")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Saves")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Shots")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShotsOffGoal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShotsOnGoal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ThrowIns")
+                        .HasColumnType("int");
+
+                    b.Property<int>("YellowCards")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MatchStatistics");
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Pearson", b =>
@@ -345,6 +407,12 @@ namespace Pomocnik_Rozgrywek.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Pomocnik_Rozgrywek.Models.MatchStatistic", "AwayStatistic")
+                        .WithMany()
+                        .HasForeignKey("AwayStatisticId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Pomocnik_Rozgrywek.Models.Team", "AwayTeam")
                         .WithMany()
                         .HasForeignKey("AwayTeamId")
@@ -354,6 +422,12 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasOne("Pomocnik_Rozgrywek.Models.Competition", "Competition")
                         .WithMany()
                         .HasForeignKey("CompetitionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Pomocnik_Rozgrywek.Models.MatchStatistic", "HomeStatistic")
+                        .WithMany()
+                        .HasForeignKey("HomeStatisticId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -371,9 +445,13 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     b.Navigation("Area");
 
+                    b.Navigation("AwayStatistic");
+
                     b.Navigation("AwayTeam");
 
                     b.Navigation("Competition");
+
+                    b.Navigation("HomeStatistic");
 
                     b.Navigation("HomeTeam");
 

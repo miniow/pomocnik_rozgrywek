@@ -9,10 +9,18 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface ITeamService
     {
-        Team GetTeamById(int id);
-        IEnumerable<Team> GetAllTeams();
-        void CreateTeam(Team team);
-        void UpdateTeam(Team team);
-        void DeleteTeam(int id);
+        Task<Team> GetTeamByIdAsync(int id);
+        Task<IEnumerable<Team>> GetAllTeamsAsync();
+        Task<Team> CreateTeamAsync(Team team);
+        Task<Team> UpdateTeamAsync(Team team);
+        Task DeleteTeamAsync(int id);
+        Task<IEnumerable<Pearson>> GetTeamPlayersAsync(int teamId);
+        Task AddPlayerToTeamAsync(Team team, Pearson pearson);
+        Task AddStafmenToTeamAsync(Team team, Pearson pearson);
+        Task AddCoachToTeamAsync(Team team, Pearson pearson);
+        Task RemoveCoachFromTeamAsync(Team team);
+        Task RemovePlayerFromTeamAsync(Team team, Pearson pearson);
+        Task GetMatchStatistic(Team team);
+        
     }
 }

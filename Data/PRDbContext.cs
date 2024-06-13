@@ -12,19 +12,19 @@ namespace Pomocnik_Rozgrywek.Data
     {
         public ApplicationDbContext() { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PR;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
-        }
+        
         public DbSet<Pearson> People { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Season> Seasons { get; set; }
+        public DbSet<MatchStatistic> MatchStatistics { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Pearson>()
                 .HasOne(p => p.CurrentTeam)
                 .WithMany(t => t.Squad)
@@ -46,6 +46,23 @@ namespace Pomocnik_Rozgrywek.Data
                 .HasOne(m => m.Competition)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.AwayStatistic)
+                .WithMany()
+                .HasForeignKey(m => m.AwayStatisticId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.HomeStatistic)
+                .WithMany()
+                .HasForeignKey(m => m.HomeStatisticId)
+                .OnDelete(DeleteBehavior.NoAction);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PR;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
 
     }

@@ -9,10 +9,12 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface ICompetitionService
     {
-        Competition GetCompetitionById(int id);
-        IEnumerable<Competition> GetAllCompetitions();
-        void CreateCompetition(Competition competition);
-        void UpdateCompetition(Competition competition);
-        void DeleteCompetition(int id);
+        Task<Competition> GetCompetitionByIdAsync(int id);
+        Task<IEnumerable<Competition>> GetAllCompetitionsAsync();
+        Task<Competition> CreateCompetitionAsync(Competition competition);
+        Task<Competition> UpdateCompetitionAsync(Competition competition);
+        Task DeleteCompetitionAsync(int id);
+        Task CreateTournamentAsync(Competition competition);
+        Task SetCompetitonSeason(Competition competition, Season season);
     }
 }

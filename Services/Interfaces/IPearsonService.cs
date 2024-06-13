@@ -9,10 +9,11 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface IPearsonService
     {
-        Pearson GetPearsonById(int id);
-        IEnumerable<Pearson> GetAllPearsons();
-        void CreatePearson(Pearson pearson);
-        void UpdatePearson(Pearson pearson);
-        void DeletePearson(int id);
+        Task<Pearson> GetPearsonByIdAsync(int id);
+        Task<IEnumerable<Pearson>> GetAllPearsonsAsync();
+        Task<Pearson> CreatePearsonAsync(Pearson pearson);
+        Task<Pearson> UpdatePearsonAsync(Pearson pearson);
+        Task DeletePearsonAsync(int id);
+        Task SetPlayerCurrentTeam(Pearson pearson, Team team);
     }
 }

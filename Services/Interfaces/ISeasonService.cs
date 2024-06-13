@@ -9,10 +9,10 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface ISeasonService
     {
-        Season GetSeasonById(int id);
-        IEnumerable<Season> GetAllSeasons();
-        void CreateSeason(Season season);
-        void UpdateSeason(Season season);
-        void DeleteSeason(int id);
+        Task<Season> GetSeasonByIdAsync(int id);
+        Task<IEnumerable<Season>> GetAllSeasonsAsync();
+        Task<Season> CreateSeasonAsync(Season season);
+        Task<Season> UpdateSeasonAsync(Season season);
+        Task DeleteSeasonAsync(int id);
     }
 }

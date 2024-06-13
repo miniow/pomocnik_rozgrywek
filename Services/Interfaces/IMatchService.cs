@@ -9,10 +9,14 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
 {
     public interface IMatchService
     {
-        Match GetMatchById(int id);
-        IEnumerable<Match> GetAllMatches();
-        void CreateMatch(Match match);
-        void UpdateMatch(Match match);
-        void DeleteMatch(int id);
+        Task<Match> GetMatchByIdAsync(int id);
+        Task<IEnumerable<Match>> GetAllMatchsAsync();
+        Task<Match> CreateMatchAsync(Match match);
+        Task<Match> UpdateMatchAsync(Match match);
+        Task DeleteMatchAsync(int id);
+        Task ScheduleMatchAsync(Match match);
+        Task SetMatchStatusAsync(int matchId, MatchStatus status);
+        Task SetMatchCurrentAreaAsync(Match match, Area area);
+        Task<IEnumerable<Match>> GetMatchesByStatusAsync(MatchStatus status);
     }
 }

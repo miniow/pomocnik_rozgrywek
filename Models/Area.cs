@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Models
 {
-    
     public class Area
     {
         public int Id { get; set; }
