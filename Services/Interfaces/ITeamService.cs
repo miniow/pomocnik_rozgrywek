@@ -14,12 +14,12 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task<Team> CreateTeamAsync(Team team);
         Task<Team> UpdateTeamAsync(Team team);
         Task DeleteTeamAsync(int id);
-        Task<IEnumerable<Pearson>> GetTeamPlayersAsync(int teamId);
-        Task AddPlayerToTeamAsync(Team team, Pearson pearson);
-        Task AddStafmenToTeamAsync(Team team, Pearson pearson);
-        Task AddCoachToTeamAsync(Team team, Pearson pearson);
+        Task<IEnumerable<Player>> GetTeamPlayersAsync(int teamId);
+        Task AddPlayerToTeamAsync(Team team, Player pearson);
+        Task AddStafmenToTeamAsync(Team team, Player pearson);
+        Task AddCoachToTeamAsync(Team team, Player pearson);
         Task RemoveCoachFromTeamAsync(Team team);
-        Task RemovePlayerFromTeamAsync(Team team, Pearson pearson);
+        Task RemovePlayerFromTeamAsync(Team team, Player pearson);
         Task GetMatchStatistic(Team team);
         
     }

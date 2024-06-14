@@ -13,23 +13,29 @@ namespace Pomocnik_Rozgrywek.Data
         public ApplicationDbContext() { }
 
         
-        public DbSet<Pearson> People { get; set; }
+        public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<MatchStatistic> MatchStatistics { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Pearson>()
+            modelBuilder.Entity<Player>()
                 .HasOne(p => p.CurrentTeam)
                 .WithMany(t => t.Squad)
                 .HasForeignKey(p => p.TeamId)
                 .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Coach>()
+                .HasOne(p => p.CurrentTeam)
+                .WithOne(t=>t.Coach)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.AwayTeam)
                 .WithMany()

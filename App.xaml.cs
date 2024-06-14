@@ -33,7 +33,8 @@ namespace Pomocnik_Rozgrywek
             services.AddScoped<ICompetitonRepository, CompetitionRepository>();
             services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
-            services.AddScoped<IPearsonRepository, PearsonRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+          //  services.AddScoped<ICoachRepository, CoachRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
 

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Repositories.Interfaces
 {
-    public interface IPearsonRepository
+    public interface IPlayerRepository
     {
-        Task<Pearson> AddAsync(Pearson pearson);
-        Task<Pearson> EditAsync(Pearson pearson);
+        Task<Player> AddAsync(Player player);
+        Task<Player> EditAsync(Player player);
         Task RemoveAsync(int id);
-        Task<Pearson> GetByIdAsync(int id);
-        Task<IEnumerable<Pearson>> GetAllAsync();
+        Task<Player> GetByIdAsync(int id);
+        Task<IEnumerable<Player>> GetAllAsync();
     }
 }

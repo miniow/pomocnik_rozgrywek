@@ -21,10 +21,9 @@ namespace Pomocnik_Rozgrywek.Models
         public string ClubColors { get; set; }
         public string Venue { get; set; }
         public ICollection<Competition> RunningCompetitions { get; set; }
-        public Pearson Coach { get; set; }
+        public Coach Coach { get; set; }
         public int MarketValue { get; set; }
-        public ICollection<Pearson> Squad { get; set; }
-        public ICollection<Pearson> Staff { get; set; }
+        public ICollection<Player> Squad { get; set; }
         public DateTime LastUpdated { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Models
 {
-    public class Pearson
+    public class Player
     {
         public int Id { get; set; }
         public string Name { get; set; }
