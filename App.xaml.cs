@@ -8,6 +8,7 @@ using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using Pomocnik_Rozgrywek.Services;
+using Pomocnik_Rozgrywek.Views;
 
 namespace Pomocnik_Rozgrywek
 {
@@ -16,7 +17,7 @@ namespace Pomocnik_Rozgrywek
     /// </summary>
     public partial class App : Application
     {
-        
+        private MainView mainView;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -41,6 +42,13 @@ namespace Pomocnik_Rozgrywek
             services.AddScoped<IAreaService, AreaService>();
 
             services.AddSingleton<MainWindow>();
+        }
+
+        private void ApplicationStart(object sender, StartupEventArgs e)
+        {
+            DbInitializer.Initialize(new ApplicationDbContext());
+            mainView = new MainView();
+            mainView.Show();
         }
     }
 

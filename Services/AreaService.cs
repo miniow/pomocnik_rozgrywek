@@ -1,4 +1,5 @@
 ﻿using Pomocnik_Rozgrywek.Models;
+using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
@@ -13,9 +14,9 @@ namespace Pomocnik_Rozgrywek.Services
     {
         private readonly IAreaRepository _areaRepository;
 
-        public AreaService(IAreaRepository areaRepository)
+        public AreaService()
         {
-            _areaRepository = areaRepository;
+            _areaRepository = new AreaRepository(new Data.ApplicationDbContext());
         }
 
         public async Task<Area> CreateAreaAsync(Area area)

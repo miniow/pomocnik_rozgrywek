@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pomocnik_Rozgrywek.Data;
 
@@ -11,9 +12,11 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614224651_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,11 +33,15 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("AreaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Flag")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -49,7 +56,7 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentAreaId");
+                    b.HasIndex("AreaId");
 
                     b.ToTable("Areas");
                 });
@@ -406,8 +413,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                 {
                     b.HasOne("Pomocnik_Rozgrywek.Models.Area", null)
                         .WithMany("ChildAreas")
-                        .HasForeignKey("ParentAreaId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("AreaId");
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Coach", b =>

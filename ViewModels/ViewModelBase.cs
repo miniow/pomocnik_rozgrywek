@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
-namespace AnimalClinic.ViewModels
+namespace Pomocnik_Rozgrywek.ViewModels
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
-        public delegate void ChangeViewEventHandler(object sender, ChangeViewEventArgs e);
+        public delegate void ChangeViewEventHandler(object sender, EventArgs e);
         public event ChangeViewEventHandler ChangeViewRequested;
 
         public event PropertyChangedEventHandler? PropertyChanged;

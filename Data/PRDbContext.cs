@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FontAwesome.Sharp;
 using Microsoft.EntityFrameworkCore;
 using Pomocnik_Rozgrywek.Models;
 
@@ -25,6 +26,12 @@ namespace Pomocnik_Rozgrywek.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Area>()
+            .HasMany(a => a.ChildAreas)
+            .WithOne()
+            .HasForeignKey(a => a.ParentAreaId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Player>()
                 .HasOne(p => p.CurrentTeam)
@@ -70,6 +77,5 @@ namespace Pomocnik_Rozgrywek.Data
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PR;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
-
     }
 }

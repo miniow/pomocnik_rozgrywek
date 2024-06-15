@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pomocnik_Rozgrywek.Services
+namespace Pomocnik_Rozgrywek.ViewModels
 {
-    public class CoachService
+    public class HomeViewModel : ViewModelBase
     {
+        public HomeViewModel() { }
     }
 }

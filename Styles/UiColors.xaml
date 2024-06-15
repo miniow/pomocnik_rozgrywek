@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="primaryBackColor1">#0540F2</Color>
+    <Color x:Key="primaryBackColor2">#165FF2</Color>
+    <Color x:Key="secondaryBackColor1">#3574F2</Color>
+    <Color x:Key="secondaryBackColor2">#168BF2</Color>
+    <Color x:Key="secondaryBackColor3">#F2F2F2</Color>
+
+    <!--Window Border Colors-->
+    <Color x:Key="winBorderColor1">#0540F2</Color>
+    <Color x:Key="winBorderColor2">#FFFFFF</Color>
+    <Color x:Key="winBorderColor3">#165FF2</Color>
+
+
+    <!--Color Palette-->
+    <SolidColorBrush x:Key="ValidationColorBorder" Color="#D63301"/>
+    <SolidColorBrush x:Key="ValidationColorBackground" Color="#FFCCBA"/>
+    <SolidColorBrush x:Key="ValidationColorText" Color="#D63301"/>
+    <SolidColorBrush x:Key="ErrorColorBorder" Color="#D8000C"/>
+    <SolidColorBrush x:Key="ErrorColorBackground" Color="#FFBABA"/>
+    <SolidColorBrush x:Key="ErrorColorText" Color="#D8000C"/>
+    <SolidColorBrush x:Key="WarningColorBorder" Color="#9F6000"/>
+    <SolidColorBrush x:Key="WarningColorBackground" Color="#FEEFB3"/>
+    <SolidColorBrush x:Key="WarningColorText" Color="#9F6000"/>
+    <SolidColorBrush x:Key="SuccessColorBorder" Color="#4F8A10"/>
+    <SolidColorBrush x:Key="SuccessColorBackground" Color="#DFF2BF"/>
+    <SolidColorBrush x:Key="SuccessColorText" Color="#4F8A10"/>
+    <SolidColorBrush x:Key="InfoColorBorder" Color="#00529B"/>
+    <SolidColorBrush x:Key="InfoColorBackground" Color="#BDE5F8"/>
+    <SolidColorBrush x:Key="InfoColorText" Color="#00529B"/>
+
+
+
+    <SolidColorBrush x:Key="mainColor" Color="#0540F2"/>
+    <SolidColorBrush x:Key="secondColor" Color="#FFFFFF"/>
+    <!--Button Colors-->
+    <SolidColorBrush x:Key="ButtonForegroundColor" Color="#0540F2"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorHover" Color="#EFEFEF"/>
+    <!--Icon Colors-->
+    <SolidColorBrush x:Key="IconForegroundColor" Color="#0540F2"/>
+    <SolidColorBrush x:Key="IconBackrgoundColor" Color="#FFFFFF"/>
+    <!--Font Colors-->
+    <SolidColorBrush x:Key="titleColor1" Color="#E0E1F1"/>
+    <SolidColorBrush x:Key="titleColor2" Color="#D5CFF5"/>
+    <SolidColorBrush x:Key="titleColor3" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="plainTextColor1" Color="#DDDDDD"/>
+    <SolidColorBrush x:Key="plainTextColor2" Color="#353535"/>
+    <SolidColorBrush x:Key="plainTextColor3" Color="#ffffff"/>
+
+    <SolidColorBrush x:Key="panelColor" Color="#200F53"/>
+    <SolidColorBrush x:Key="panelOverColor" Color="#0540F2"/>
+    <SolidColorBrush x:Key="panelActiveColor" Color="#ffffff"/>
+</ResourceDictionary>
