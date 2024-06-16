@@ -12,6 +12,7 @@ namespace Pomocnik_Rozgrywek.Repositories.Interfaces
         Task<Area> AddAsync(Area area);
         Task<Area> EditAsync(Area area);
         Task<IEnumerable<Area>> GetAllAsync();
+        Task<Area> GetRoot();
         Task<Area> GetByIdAsync(int id);
         Task RemoveAsync(int id);
     }

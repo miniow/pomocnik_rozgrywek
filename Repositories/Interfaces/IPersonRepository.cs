@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Repositories.Interfaces
 {
-    public interface IPlayerRepository
+    public interface IPersonRepository
     {
-        Task<Player> AddAsync(Player player);
-        Task<Player> EditAsync(Player player);
+        Task<Person> AddAsync(Person player);
+        Task<Person> EditAsync(Person player);
         Task RemoveAsync(int id);
-        Task<Player> GetByIdAsync(int id);
-        Task<IEnumerable<Player>> GetAllAsync();
+        Task<Person> GetByIdAsync(int id);
+        Task<IEnumerable<Person>> GetAllAsync();
     }
 }

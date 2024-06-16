@@ -8,7 +8,6 @@ namespace Pomocnik_Rozgrywek.Models
 {
     public class Match
     {
-        public Area Area { get; set; }
         public Competition Competition { get; set; }
         public Season Season { get; set; }
 
@@ -22,10 +21,10 @@ namespace Pomocnik_Rozgrywek.Models
         public int Matchday { get; set; }
         public CompetitionStage Stage { get; set; }
         public Team HomeTeam { get; set; }
-        public MatchStatistic HomeStatistic { get; set; }
+        public MatchStatistic? HomeStatistic { get; set; }
         public int HomeStatisticId { get; set; }
         public Team AwayTeam { get; set; }
-        public MatchStatistic AwayStatistic { get; set; }
+        public MatchStatistic? AwayStatistic { get; set; }
         public int AwayStatisticId { get; set; }
 
     }

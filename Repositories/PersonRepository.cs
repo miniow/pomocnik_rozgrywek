@@ -10,37 +10,37 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Repositories
 {
-    public class PlayerRepository : RepositoryBase, IPlayerRepository
+    public class PersonRepository : RepositoryBase, IPersonRepository
     {
-        public PlayerRepository(ApplicationDbContext dbContext) : base(dbContext) { }
+        public PersonRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        public async Task<Player> AddAsync(Player player)
+        public async Task<Person> AddAsync(Person person)
         {
-            await _db.Players.AddAsync(player);
+            await _db.Person.AddAsync(person);
             await _db.SaveChangesAsync();
-            return player;
+            return person;
         }
 
-        public async Task<Player> EditAsync(Player player)
+        public async Task<Person> EditAsync(Person peroson)
         {
-            _db.Players.Update(player);
+            _db.Person.Update(peroson);
             await _db.SaveChangesAsync();
-            return player;
+            return peroson;
         }
 
         public async Task RemoveAsync(int id)
         {
-            var player = await _db.Players.FindAsync(id);
-            if (player != null)
+            var person = await _db.Person.FindAsync(id);
+            if (person != null)
             {
-                _db.Players.Remove(player);
+                _db.Person.Remove(person);
                 await _db.SaveChangesAsync();
             }
         }
 
-        public async Task<Player> GetByIdAsync(int id)
+        public async Task<Person> GetByIdAsync(int id)
         {
-            var player = await _db.Players.FindAsync(id);
+            var player = await _db.Person.FindAsync(id);
             if (player == null)
             {
                 throw new KeyNotFoundException($"Pearson with Id {id} not found.");
@@ -48,9 +48,9 @@ namespace Pomocnik_Rozgrywek.Repositories
             return player;
         }
 
-        public async Task<IEnumerable<Player>> GetAllAsync()
+        public async Task<IEnumerable<Person>> GetAllAsync()
         {
-            return await _db.Players.ToListAsync();
+            return await _db.Person.ToListAsync();
         }
     }
 }

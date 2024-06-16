@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- TreeView to display area hierarchy -->
-        <TreeView ItemsSource="{Binding Areas}"
+        <TreeView Style="{DynamicResource TreeViewStyle1}" ItemsSource="{Binding AreaRoot}"
                   SelectedItemChanged="TreeView_SelectedItemChanged"
                   Grid.Column="0">
             <TreeView.ItemTemplate>
@@ -26,7 +26,6 @@
                         <Image Source="{Binding Flag}" />
                         <TextBlock Text="{Binding Name}" />
                     </StackPanel>
-     
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
@@ -46,10 +45,7 @@
             <TextBox Text="{Binding SelectedArea.ParentAreaId}" />
             <TextBlock Text="Parent Area:" />
             <TextBox Text="{Binding SelectedArea.ParentArea}" />
-            
             <Image Source="{Binding SelectedArea.Flag}" />
-
-
         </StackPanel>
     </Grid>
 </UserControl>

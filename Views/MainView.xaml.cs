@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pomocnik_Rozgrywek.Messanger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -25,7 +26,8 @@ namespace Pomocnik_Rozgrywek.Views
         public MainView()
         {
             InitializeComponent();
- 
+            GlobalMessageService instance = GlobalMessageService.GetMessageService();
+            GlobalMessageService.AddMessage(this, new ErrorMessage { Text = "Error" });
         }
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);

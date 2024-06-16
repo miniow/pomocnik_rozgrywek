@@ -14,13 +14,16 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task<Team> CreateTeamAsync(Team team);
         Task<Team> UpdateTeamAsync(Team team);
         Task DeleteTeamAsync(int id);
-        Task<IEnumerable<Player>> GetTeamPlayersAsync(int teamId);
-        Task AddPlayerToTeamAsync(Team team, Player pearson);
-        Task AddStafmenToTeamAsync(Team team, Player pearson);
-        Task AddCoachToTeamAsync(Team team, Player pearson);
+        Task<IEnumerable<Person>> GetTeamPlayersAsync(int teamId);
+        Task AddPlayerToTeamAsync(Team team, Person pearson);
+        Task AddCoachToTeamAsync(Team team, Person pearson);
         Task RemoveCoachFromTeamAsync(Team team);
-        Task RemovePlayerFromTeamAsync(Team team, Player pearson);
-        Task GetMatchStatistic(Team team);
-        
+        Task RemovePlayerFromTeamAsync(Team team, Person pearson);
+
     }
 }
+//interakcje między uczestnikami, którzy podejmują decyzje,
+//ryzyko przy podejmowaniu decyzji 
+//strategie 
+//psychologia decyzji
+//kto wygrywa kiedy wygrywa dlaczego wygrywaprzy zmianie nagród i procentach błędów

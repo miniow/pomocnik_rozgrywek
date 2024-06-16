@@ -16,7 +16,6 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task DeleteMatchAsync(int id);
         Task ScheduleMatchAsync(Match match);
         Task SetMatchStatusAsync(int matchId, MatchStatus status);
-        Task SetMatchCurrentAreaAsync(Match match, Area area);
         Task<IEnumerable<Match>> GetMatchesByStatusAsync(MatchStatus status);
     }
 }

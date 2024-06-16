@@ -14,14 +14,13 @@ namespace Pomocnik_Rozgrywek.Data
         public ApplicationDbContext() { }
 
         
-        public DbSet<Player> Players { get; set; }
+        public DbSet<Person> Person{ get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<Competition> Competitions { get; set; }
         public DbSet<Area> Areas { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<MatchStatistic> MatchStatistics { get; set; }
-        public DbSet<Coach> Coaches { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,16 +30,12 @@ namespace Pomocnik_Rozgrywek.Data
             .HasMany(a => a.ChildAreas)
             .WithOne()
             .HasForeignKey(a => a.ParentAreaId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Player>()
+            modelBuilder.Entity<Person>()
                 .HasOne(p => p.CurrentTeam)
                 .WithMany(t => t.Squad)
                 .HasForeignKey(p => p.TeamId)
-                .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Coach>()
-                .HasOne(p => p.CurrentTeam)
-                .WithOne(t=>t.Coach)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Match>()

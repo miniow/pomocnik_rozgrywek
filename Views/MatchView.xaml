@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pomocnik_Rozgrywek.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:viewModel="clr-namespace:Pomocnik_Rozgrywek.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -11,6 +12,15 @@
         <viewModel:MatchesViewModel/>
     </UserControl.DataContext>
     <Grid>
-            
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Matches}"
+                          ItemTemplate="{StaticResource MatchCardTemplate}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

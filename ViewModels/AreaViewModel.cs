@@ -33,7 +33,16 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(SelectedArea));
             }
         }
-
+        private ObservableCollection<Area> _areaRoot;
+        public ObservableCollection<Area> AreaRoot
+        {
+            get { return _areaRoot; }
+            set
+            {
+                _areaRoot = value;
+                OnPropertyChanged(nameof(AreaRoot));
+            }
+        }
         public AreaViewModel()
         {
             _areaService = new AreaService();
@@ -41,7 +50,18 @@ namespace Pomocnik_Rozgrywek.ViewModels
         }
         private async void LoadAreas()
         {
-            Areas = new ObservableCollection<Area>(await _areaService.GetAllAreasAsync());
+            var areas = await _areaService.GetAllAreasAsync();
+            var hierarchy = BuildHierarchy(areas);
+            AreaRoot = new ObservableCollection<Area>(hierarchy);
+            Areas = new ObservableCollection<Area>(areas);
+
+            //var root = areas.FirstOrDefault(a => a.ParentAreaId == null);
+            //if (root != null)
+            //{
+ 
+            //}
+            //Areas = new ObservableCollection<Area>(areas);
+
         }
         private List<Area> BuildHierarchy(IEnumerable<Area> areas)
         {
@@ -50,7 +70,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             {
                 area.ChildAreas = lookup[area.Id].ToList();
             }
-            return lookup[0].ToList();
+            return lookup[null].ToList();
         }
     }
 }

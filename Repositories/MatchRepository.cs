@@ -30,7 +30,10 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<IEnumerable<Match>> GetAllAsync()
         {
-            return await _db.Matches.ToListAsync();
+            return await _db.Matches
+         .Include(m => m.HomeTeam)
+         .Include(m => m.AwayTeam)
+         .ToListAsync();
         }
 
         public async Task<Match> GetByIdAsync(int id)

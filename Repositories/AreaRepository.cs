@@ -44,6 +44,11 @@ namespace Pomocnik_Rozgrywek.Repositories
             return area;
         }
 
+        public async Task<Area> GetRoot()
+        {
+            return await _db.Areas.FirstOrDefaultAsync(a => a.ParentAreaId == null);
+        }
+
         public async Task RemoveAsync(int id)
         {
             var area = await _db.Areas.FindAsync(id);

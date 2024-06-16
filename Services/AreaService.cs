@@ -39,6 +39,11 @@ namespace Pomocnik_Rozgrywek.Services
             return await _areaRepository.GetByIdAsync(id);
         }
 
+        public async Task<Area> GetRoot()
+        {
+            return await _areaRepository.GetRoot();
+        }
+
         public async Task<Area> UpdateAreaAsync(Area area)
         {
             return await _areaRepository.EditAsync(area);

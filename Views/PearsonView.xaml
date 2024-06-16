@@ -5,12 +5,127 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:Pomocnik_Rozgrywek.ViewModels"
              xmlns:local="clr-namespace:Pomocnik_Rozgrywek.Views"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <viewModel:PearsonViewModel/>
     </UserControl.DataContext>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid>
+                <TextBlock Text="{Binding Persons.Count}"
+                           FontSize="18"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"></TextBlock>
+                <Button Command="{Binding OpenAddPersonDialogCommand}"
+                        Style="{StaticResource addButton}"
+                        HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="Add"
+                                      Style="{StaticResource addButtonIcon}"
+                                      VerticalAlignment="Center"
+                                      Width="11"
+                                      Height="11"
+                                      Margin="0 0 10 0" />
+                        <TextBlock Text="Add Competiton" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+        </Grid>
+        <DataGrid Style="{DynamicResource DataGridStyle1}"
+                  CellStyle="{DynamicResource DataGridCellStyle1}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                  RowStyle="{DynamicResource DataGridRowStyle1}"
+                  Grid.Row="1"
+                  ItemsSource="{Binding Persons}"
+                  Margin="0 0 10 0"
+                  LoadingRow="DataGrid_LoadingRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    IsReadOnly="True"
+                                    Width="auto"
+                                    Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Name"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding Name}" />
+                <DataGridTextColumn Header="First Name"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding FirstName}" />
+                <DataGridTextColumn Header="Last Name"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="Date of Birth"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding DateOfBirth}" />
+                <DataGridTextColumn Header="Nationality"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding Nationality}" />
+                <DataGridTextColumn Header="Position"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding Position}" />
+                <DataGridTextColumn Header="Shirt Number"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding ShirtNumber}" />
+                <DataGridTextColumn Header="Last Updated"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding LastUpdated}" />
+                <DataGridTextColumn Header="Team ID"
+                                    IsReadOnly="True"
+                                    Width="*"
+                                    Binding="{Binding TeamId}" />
+                <DataGridTemplateColumn Header="Current Team"
+                                        IsReadOnly="True"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CurrentTeam.Name}"
+                                       VerticalAlignment="Center" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Operations"
+                                        IsReadOnly="True"
+                                        Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource gridEditButton}"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.EditPersonCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="Pencil"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
+                                <Button Style="{StaticResource gridRemoveButton}"
+                                        Cursor="Hand"
+                                        Margin="5 0 0 0"
+                                        Command="{Binding DataContext.DeletePersonCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="DeleteLeft"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </UserControl>

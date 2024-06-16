@@ -120,4 +120,118 @@
         <Setter Property="Width" Value="9"/>
         <Setter Property="Height" Value="9"/>
     </Style>
+
+    <Style x:Key="addButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{StaticResource ButtonBackgroundColor}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource ButtonForegroundColor}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="Width"
+                Value="150" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="Margin"
+                Value="0 0 30 0" />
+        <Setter Property="FontSize"
+                Value="13" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="7">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Cursor"
+                        Value="Hand" />
+                <Setter Property="Background"
+                        Value="{StaticResource ButtonBackgroundColorHover}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ButtonBackgroundColorHover}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="addButtonIcon"
+           TargetType="fa:IconImage">
+        <Setter Property="Foreground"
+                Value="{StaticResource IconForegroundColor}" />
+        <Setter Property="Width"
+                Value="15" />
+        <Setter Property="Height"
+                Value="15" />
+    </Style>
+    
+    <Style x:Key="gridEditButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{StaticResource InfoColorBackground }" />
+        <Setter Property="BorderBrush"
+                Value="{StaticResource InfoColorBorder}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource InfoColorText}" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="5"
+                            Padding="5"
+                            BorderThickness="1"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseDirectlyOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{StaticResource ButtonBackgroundColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="gridRemoveButton"
+           TargetType="Button"
+           BasedOn="{StaticResource gridEditButton}">
+        <Setter Property="Background"
+                Value="{StaticResource ErrorColorBackground}" />
+        <Setter Property="BorderBrush"
+                Value="{StaticResource ErrorColorBorder}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource ErrorColorText}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseDirectlyOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{StaticResource ButtonBackgroundColor}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="gridButtonIcon"
+           TargetType="fa:IconImage">
+        <Setter Property="Width"
+                Value="12" />
+        <Setter Property="Height"
+                Value="12" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+    </Style>
 </ResourceDictionary>

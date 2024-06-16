@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Models
 {
+   
     public enum Group
     {
         GROUP_A,

@@ -16,5 +16,6 @@ namespace Pomocnik_Rozgrywek.Models
         public int? ParentAreaId { get; set; }
         public string? ParentArea { get; set; }
         public ICollection<Area> ChildAreas { get; set;}
+        public ICollection<Competition> Competitions { get; set;}
     }
 }

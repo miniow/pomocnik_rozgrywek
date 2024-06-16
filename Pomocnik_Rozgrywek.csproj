@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Language\Strings.pl.resx" />
+    <EmbeddedResource Remove="Language\Strings.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Images\logo.png" />
   </ItemGroup>
 
@@ -18,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
@@ -25,11 +31,26 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="OxyPlot.wpf" Version="2.1.2" />
     <PackageReference Include="Svg.Wpf" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CustomControls\" />
+    <Resource Include="Language\Strings.pl.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </Resource>
+    <Resource Include="Language\Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Language\strings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pomocnik_Rozgrywek.Data;
 
@@ -11,9 +12,11 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240616121640_test4")]
+    partial class test4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -350,7 +353,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasOne("Pomocnik_Rozgrywek.Models.Area", null)
                         .WithMany("ChildAreas")
                         .HasForeignKey("ParentAreaId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Competition", b =>

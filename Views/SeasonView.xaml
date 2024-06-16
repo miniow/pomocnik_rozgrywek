@@ -5,12 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:Pomocnik_Rozgrywek.ViewModels"
              xmlns:local="clr-namespace:Pomocnik_Rozgrywek.Views"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <viewModel:SeasonViewModel />
     </UserControl.DataContext>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <lvc:CartesianChart Grid.Row="0"
+                            Series="{Binding GanttSeries}">
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Seasons"
+                          Labels="{Binding SeasonLabels}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Time"
+                          LabelFormatter="{Binding Formatter}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
+
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Seasons}"
+                 SelectedItem="{Binding SelectedSeason}"
+                 >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Id}" />
+                        <TextBlock Text="{Binding StartDate}" />
+                        <TextBlock Text="{Binding EndDate}" />
+                        <TextBlock Text="{Binding CurrentMatchday}" />
+                        <TextBlock Text="{Binding Winner.Name}" />
+                        <TextBlock Text="{Binding Stages}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

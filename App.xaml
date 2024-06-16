@@ -8,7 +8,12 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/UIcolors.xaml"/>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/DataGridStyles.xaml" />
+                <ResourceDictionary Source="/Styles/TreeViewStyles.xaml" />
+                <ResourceDictionary Source="/Styles/MatchCard.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+           
         </ResourceDictionary>
     </Application.Resources>
 
