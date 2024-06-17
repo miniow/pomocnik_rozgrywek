@@ -468,8 +468,7 @@ namespace Pomocnik_Rozgrywek.Migrations
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Team", b =>
                 {
-                    b.Navigation("Coach")
-                        .IsRequired();
+                    b.Navigation("Coach");
 
                     b.Navigation("RunningCompetitions");
 

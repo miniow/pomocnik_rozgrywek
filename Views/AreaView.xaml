@@ -25,7 +25,15 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding Flag}" />
                         <TextBlock Text="{Binding Name}" />
+                        <StackPanel.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Create Tournament"
+                                          Command="{Binding DataContext.CreateTournamentCommand, RelativeSource={RelativeSource AncestorType=TreeView}}"
+                                          CommandParameter="{Binding}" />
+                            </ContextMenu>
+                        </StackPanel.ContextMenu>
                     </StackPanel>
+                    
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
@@ -46,6 +54,8 @@
             <TextBlock Text="Parent Area:" />
             <TextBox Text="{Binding SelectedArea.ParentArea}" />
             <Image Source="{Binding SelectedArea.Flag}" />
+
+            <Button ></Button>
         </StackPanel>
     </Grid>
 </UserControl>

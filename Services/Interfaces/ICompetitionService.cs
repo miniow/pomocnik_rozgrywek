@@ -16,5 +16,6 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task DeleteCompetitionAsync(int id);
         Task CreateTournamentAsync(Competition competition);
         Task SetCompetitonSeason(Competition competition, Season season);
+        Task<IEnumerable<Season>> GetSeasonsAsync();
     }
 }

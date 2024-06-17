@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="/Styles/DataGridStyles.xaml" />
                 <ResourceDictionary Source="/Styles/TreeViewStyles.xaml" />
                 <ResourceDictionary Source="/Styles/MatchCard.xaml" />
+                <ResourceDictionary Source="/Styles/TextBoxStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
            

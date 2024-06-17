@@ -16,8 +16,15 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<Competition> AddAsync(Competition competition)
         {
-            await _db.Competitions.AddAsync(competition);
-            await _db.SaveChangesAsync();
+            try
+            {
+                await _db.Competitions.AddAsync(competition);
+                await _db.SaveChangesAsync();
+            }catch(Exception ex)
+            {
+                var a  = ex.ToString();
+            }
+            
             return competition;
         }
 

@@ -4,12 +4,14 @@ using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Repositories
 {
+    
     public class MatchRepository : RepositoryBase, IMatchRepository
     {
         public MatchRepository(ApplicationDbContext dbContext) : base(dbContext) { }
@@ -33,6 +35,7 @@ namespace Pomocnik_Rozgrywek.Repositories
             return await _db.Matches
          .Include(m => m.HomeTeam)
          .Include(m => m.AwayTeam)
+         .Include(m => m.Competition)
          .ToListAsync();
         }
 

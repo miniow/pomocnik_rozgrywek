@@ -15,5 +15,6 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task<Area> CreateAreaAsync(Area area);
         Task<Area> UpdateAreaAsync(Area area);
         Task DeleteAreaAsync(int id);
+        Task AddCompetitonToArea(Competition competition, Area area);
     }
 }

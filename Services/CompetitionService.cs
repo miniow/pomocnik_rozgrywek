@@ -5,6 +5,7 @@ using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,10 +14,12 @@ namespace Pomocnik_Rozgrywek.Services
     public class CompetitionService : ICompetitionService
     {
         private readonly ICompetitonRepository _competitionRepository;
+        private readonly ISeasonRepository _seasonRepository;
 
         public CompetitionService()
         {
             _competitionRepository = new CompetitionRepository(new Data.ApplicationDbContext());
+            _seasonRepository = new SeasonRepository(new Data.ApplicationDbContext());
         }
         public async Task<Competition> CreateCompetitionAsync(Competition competition)
         {
@@ -30,8 +33,14 @@ namespace Pomocnik_Rozgrywek.Services
         {
             if (competition == null)
                 throw new ArgumentNullException(nameof(competition));
-
-            await _competitionRepository.AddAsync(competition);
+            try
+            {
+                await _competitionRepository.AddAsync(competition);
+            }catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            
         }
 
         public async Task DeleteCompetitionAsync(int id)
@@ -47,6 +56,11 @@ namespace Pomocnik_Rozgrywek.Services
         public async Task<Competition> GetCompetitionByIdAsync(int id)
         {
             return await _competitionRepository.GetByIdAsync(id);
+        }
+
+        public async Task<IEnumerable<Season>> GetSeasonsAsync()
+        {
+            return await _seasonRepository.GetAllAsync();
         }
 
         public async Task SetCompetitonSeason(Competition competition, Season season)
