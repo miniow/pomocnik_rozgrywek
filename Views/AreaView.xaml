@@ -16,20 +16,20 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
 
-        <!-- TreeView to display area hierarchy -->
         <TreeView Style="{DynamicResource TreeViewStyle1}" ItemsSource="{Binding AreaRoot}"
                   SelectedItemChanged="TreeView_SelectedItemChanged"
                   Grid.Column="0">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding ChildAreas}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Flag}" />
+                        <Image Source="{Binding Flag}" MaxHeight="19" MaxWidth="19" />
                         <TextBlock Text="{Binding Name}" />
                         <StackPanel.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Create Tournament"
-                                          Command="{Binding DataContext.CreateTournamentCommand, RelativeSource={RelativeSource AncestorType=TreeView}}"
-                                          CommandParameter="{Binding}" />
+                                <MenuItem Header="Create Child Area"
+                                          Click="addChildAreaClick"/>
+                                <MenuItem Header="Delete Area"
+                                          Click="deleteAreaClick"/>
                             </ContextMenu>
                         </StackPanel.ContextMenu>
                     </StackPanel>
@@ -53,9 +53,16 @@
             <TextBox Text="{Binding SelectedArea.ParentAreaId}" />
             <TextBlock Text="Parent Area:" />
             <TextBox Text="{Binding SelectedArea.ParentArea}" />
-            <Image Source="{Binding SelectedArea.Flag}" />
+            <Image Source="{Binding SelectedArea.Flag}" Width="200" Height="200" />
 
-            <Button ></Button>
+            <Button Style="{StaticResource addButton}"
+                    Command="{Binding AddChildAreaCommand}" Content="add child area"></Button>
+            <Button Style="{StaticResource addButton}"
+                    Command="{Binding UpdateAreaCommand}"
+                    Content="Edit Area"></Button>
+            <Button Style="{StaticResource addButton}"
+                    Command="{Binding DeleteAreaCommand}"
+                    Content="Delete"></Button>
         </StackPanel>
     </Grid>
 </UserControl>

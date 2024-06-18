@@ -1,4 +1,6 @@
-﻿using Pomocnik_Rozgrywek.Models;
+﻿using Pomocnik_Rozgrywek.CustomControls;
+using Pomocnik_Rozgrywek.Messanger;
+using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Services;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
@@ -12,9 +14,12 @@ using System.Windows.Input;
 namespace Pomocnik_Rozgrywek.ViewModels
 {
     public class AreaViewModel : ViewModelBase
-    {
+    { 
         private readonly IAreaService _areaService;
         private ObservableCollection<Area> _areas;
+        private Area _selectedArea;
+        private ObservableCollection<Area> _areaRoot;
+
         public ObservableCollection<Area> Areas
         {
             get { return _areas; }
@@ -24,7 +29,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(Areas));
             }
         }
-        private Area _selectedArea;
         public Area SelectedArea
         {
             get { return _selectedArea; }
@@ -34,7 +38,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(SelectedArea));
             }
         }
-        private ObservableCollection<Area> _areaRoot;
         public ObservableCollection<Area> AreaRoot
         {
             get { return _areaRoot; }
@@ -44,48 +47,67 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(AreaRoot));
             }
         }
-        public ICommand AddCompetitonToAreaCommand { get; }
+
+        public ICommand AddChildAreaCommand { get; }
         public ICommand LoadAreasCommand { get; }
         public ICommand AddAreaCommand { get; }
         public ICommand UpdateAreaCommand { get; }
         public ICommand DeleteAreaCommand { get; }
         public AreaViewModel()
         {
-            AddCompetitonToAreaCommand = new ViewModelCommand(async param => await AddCompetitonToArea(param as Tuple<Competition, Area>));
+
+            messageService = GlobalMessageService.GetMessageService();
+            AddChildAreaCommand = new ViewModelCommand(async param => await AddChildArea());
             LoadAreasCommand = new ViewModelCommand(async param => await LoadAreas());
-            AddAreaCommand = new ViewModelCommand(async param => await AddMatch(param as Area));
-            UpdateAreaCommand = new ViewModelCommand(async param => await UpdateMatch(param as Area));
-            DeleteAreaCommand = new ViewModelCommand(async param => await DeleteMatch(param as Area));
+            AddAreaCommand = new ViewModelCommand(async param => await AddArea(param as Area));
+            UpdateAreaCommand = new ViewModelCommand(async param => await UpdateArea(param as Area));
+            DeleteAreaCommand = new ViewModelCommand(async param => await DeleteArea(param as Area));
             _areaService = new AreaService();
 
             LoadAreas();
         }
 
-        private Task DeleteMatch(Area? area)
+        private async Task DeleteArea(Area? area)
         {
-            throw new NotImplementedException();
-        }
-
-        private Task UpdateMatch(Area? area)
-        {
-            throw new NotImplementedException();
-        }
-
-        private Task AddMatch(Area? area)
-        {
-            throw new NotImplementedException();
-        }
-
-        private async Task AddCompetitonToArea(Tuple<Competition, Area> param)
-        {
-            if (param == null || param.Item1 == null || param.Item2 == null)
+            try
             {
-                throw new NullReferenceException();
+                await _areaService.DeleteAreaAsync(SelectedArea.Id);
+            }catch (Exception ex)
+            {
+                messageService.AddMessage(new ErrorMessage("Cannot delete Area" + ex.ToString()));
+                return;
             }
-            var competition = param.Item1;
-            var area = param.Item2;
+            messageService.AddMessage(new SuccessMessage("Area deleted succesfully"));
+            await LoadAreas();
+        }
 
-            await _areaService.AddCompetitonToArea(competition,area);
+        private async Task UpdateArea(Area? area)
+        {
+            await _areaService.UpdateAreaAsync(SelectedArea);
+            await LoadAreas();
+        }
+
+        private async Task AddArea(Area? area)
+        {
+            if(SelectedArea.ChildAreas == null)
+            {
+                SelectedArea.ChildAreas = new ObservableCollection<Area>();
+            }
+            SelectedArea.ChildAreas.Add(area);
+            area.ParentArea = SelectedArea.Name;
+            await _areaService.CreateAreaAsync(area);
+            await _areaService.UpdateAreaAsync(SelectedArea);
+        }
+
+        private async Task AddChildArea()
+        {
+            var addAreaDialog = new AddAreaDialog();
+            addAreaDialog.OnAreaCreated += async (newArea) =>
+            {
+                await AddArea(newArea);
+            };
+            addAreaDialog.Show();
+            return;
         }
 
         private async Task LoadAreas()
@@ -94,14 +116,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
             var hierarchy = BuildHierarchy(areas);
             AreaRoot = new ObservableCollection<Area>(hierarchy);
             Areas = new ObservableCollection<Area>(areas);
-
-            //var root = areas.FirstOrDefault(a => a.ParentAreaId == null);
-            //if (root != null)
-            //{
- 
-            //}
-            //Areas = new ObservableCollection<Area>(areas);
-
         }
         private List<Area> BuildHierarchy(IEnumerable<Area> areas)
         {

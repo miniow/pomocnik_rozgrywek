@@ -84,6 +84,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         private async Task LoadCompetitions()
         {
             Competitions = new ObservableCollection<Competition>(await _competitionService.GetAllCompetitionsAsync());
+            var a = "dsagf";
         }
     }
 }

@@ -393,7 +393,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasOne("Pomocnik_Rozgrywek.Models.Competition", "Competition")
                         .WithMany()
                         .HasForeignKey("CompetitionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pomocnik_Rozgrywek.Models.MatchStatistic", "HomeStatistic")

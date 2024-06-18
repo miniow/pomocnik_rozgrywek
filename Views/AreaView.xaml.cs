@@ -39,5 +39,17 @@ namespace Pomocnik_Rozgrywek.Views
                 viewModel.SelectedArea = selectedArea;
             }
         }
+
+        private void addChildAreaClick(object sender, RoutedEventArgs e)
+        {
+            var viewmodel = (AreaViewModel)DataContext;
+            viewmodel.AddChildAreaCommand.Execute(null);
+        }
+
+        private void deleteAreaClick(object sender, RoutedEventArgs e)
+        {
+            var viewmodel = (AreaViewModel)DataContext;
+            viewmodel.DeleteAreaCommand.Execute(null);
+        }
     }
 }

@@ -35,7 +35,6 @@ namespace Pomocnik_Rozgrywek.Repositories
             return await _db.Matches
          .Include(m => m.HomeTeam)
          .Include(m => m.AwayTeam)
-         .Include(m => m.Competition)
          .ToListAsync();
         }
 

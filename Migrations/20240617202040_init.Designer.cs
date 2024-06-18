@@ -12,7 +12,7 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240617172227_init")]
+    [Migration("20240617202040_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -396,7 +396,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasOne("Pomocnik_Rozgrywek.Models.Competition", "Competition")
                         .WithMany()
                         .HasForeignKey("CompetitionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Pomocnik_Rozgrywek.Models.MatchStatistic", "HomeStatistic")

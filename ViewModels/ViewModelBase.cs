@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using Pomocnik_Rozgrywek.Messanger;
 
 namespace Pomocnik_Rozgrywek.ViewModels
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        protected GlobalMessageService messageService;
         public delegate void ChangeViewEventHandler(object sender, EventArgs e);
         public event ChangeViewEventHandler ChangeViewRequested;
 

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pomocnik_Rozgrywek.Models;
+using Pomocnik_Rozgrywek.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +29,39 @@ namespace Pomocnik_Rozgrywek.Views
         private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var row = DataGridRow.GetRowContainingElement(button);
+                if (row != null)
+                {
+                    dataGrid.BeginEdit();
+                }
+            }
+        }
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button != null)
+            {
+                var row = DataGridRow.GetRowContainingElement(button);
+                if (row != null)
+                {
+                    dataGrid.CommitEdit();
+                    var viewModel = DataContext as PearsonViewModel;
+                    if (viewModel != null)
+                    {
+                        var person = row.Item as Person;
+                        if (person != null)
+                        {
+                            viewModel.UpdatePersonCommand.Execute(person);
+                        }
+                    }
+                }
+            }
         }
     }
 }

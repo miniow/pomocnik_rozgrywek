@@ -26,8 +26,7 @@ namespace Pomocnik_Rozgrywek.Views
         public MainView()
         {
             InitializeComponent();
-            GlobalMessageService instance = GlobalMessageService.GetMessageService();
-            GlobalMessageService.AddMessage(this, new ErrorMessage { Text = "Error" });
+            
         }
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);

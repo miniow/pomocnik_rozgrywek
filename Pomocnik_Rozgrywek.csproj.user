@@ -7,7 +7,16 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="CustomControls\AddAreaDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\AddCompetitionDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomControls\AddPersonDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomControls\AddTeamDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="CustomControls\MessageControl.xaml.cs">
@@ -39,7 +48,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="CustomControls\AddAreaDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\AddCompetitionDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\AddPersonDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\AddTeamDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\MessageControl.xaml">

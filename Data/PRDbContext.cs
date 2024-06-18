@@ -50,10 +50,6 @@ namespace Pomocnik_Rozgrywek.Data
                 .HasOne(m => m.Season)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Match>()
-                .HasOne(m => m.Competition)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.AwayStatistic)

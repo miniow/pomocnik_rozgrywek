@@ -29,14 +29,9 @@ namespace Pomocnik_Rozgrywek.Models
     }
     public enum MatchStatus
     {
+        NONE,
         SCHEDULED,
-        TIMED,
-        IN_PLAY,
-        PAUSED,
-        FINISHED,
-        SUSPENDED,
-        POSTPONED,
-        CANCELLED,
-        AWARDED
+        PLAYING,
+        ENDED
     }
 }

@@ -30,7 +30,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
         private ObservableCollection<Match> _matches;
         private Match _selectedMatch;
         private CompetitionStage _selectedStage;
-        private ObservableCollection<Competition> _competitions;
         private ObservableCollection<CompetitionStage> _stages;
         private ObservableCollection<Match> allMatches; 
         public ObservableCollection<Match> Matches
@@ -42,19 +41,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(Matches));
             }
         }
-        private Competition _selectedCompetition;
-        public Competition SelectedCompetition
-        {
-            get { return _selectedCompetition; }
-            set
-            {
-                _selectedCompetition = value;
-                OnPropertyChanged(nameof(SelectedCompetition));
-                FilterbyCompetitonsc();
-            }
-        }
-        public ObservableCollection<Competition> Competitions 
-        { get { return _competitions; } set { _competitions = value; OnPropertyChanged(nameof(Competitions)); } }
         public ObservableCollection<CompetitionStage> Stages { get { return _stages; } set { _stages = value; OnPropertyChanged(nameof(Stages)); } }
         public CompetitionStage SelectedStage
         {
@@ -92,10 +78,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         }
         private async Task LoadMatches()
         {
-            allMatches = new ObservableCollection<Match>(await _matchService.GetAllMatchsAsync());
-            Matches = allMatches;
-            Competitions = new ObservableCollection<Competition>(Matches.Select(m => m.Competition).Distinct());
-           // Stages = new ObservableCollection<CompetitionStage>(Matches.Select(m => m.Stage).Distinct());
+            Matches = new ObservableCollection<Match>(await _matchService.GetAllMatchsAsync());
         }
 
         private async Task AddMatch(Match match)
@@ -120,19 +103,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 await _matchService.DeleteMatchAsync(SelectedMatch.Id);
                 Matches.Remove(SelectedMatch);
             }
-        }
-        private void FilterbyCompetitonsc()
-        {
-            if (_matches == null) return;
-
-            var filteredMatches = allMatches.AsEnumerable();
-
-            if (SelectedCompetition != null)
-            {
-                filteredMatches = filteredMatches.Where(m => m.Competition.Id == SelectedCompetition.Id);
-            }
-            Matches = new ObservableCollection<Match>(filteredMatches);
-
         }
         private void FilterBystages()
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pomocnik_Rozgrywek.Models
 {
-    public class MatchStatistic
+   public class MatchStatistic
     {
         public int Id { get; set; }
         public int CornerKicks { get; set; }
@@ -24,4 +24,5 @@ namespace Pomocnik_Rozgrywek.Models
         public int RedCards { get; set; }
 
     }
+
 }

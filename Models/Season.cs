@@ -12,7 +12,7 @@ namespace Pomocnik_Rozgrywek.Models
         public DateOnly StartDate { get; set; }
         public DateOnly EndDate { get; set; }
         public int CurrentMatchday { get; set; }
-        public Team? Winner {  get; set; }
+        public Team? Winner { get; set; }
         public CompetitionStage? Stages { get; set; }
     }
 }

@@ -16,17 +16,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Horizontal"
                     Grid.Row="0"
                     Margin="10">
-            <ComboBox Width="150"
-                      Margin="0,0,10,0"
-                      ItemsSource="{Binding Competitions}"
-                      SelectedItem="{Binding SelectedCompetition}"
-                      DisplayMemberPath="Name"
-/>
-
             <ComboBox Width="150"
                       ItemsSource="{Binding Stages}"
                       SelectedItem="{Binding SelectedStage}" />

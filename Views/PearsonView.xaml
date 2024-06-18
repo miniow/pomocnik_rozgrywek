@@ -24,7 +24,7 @@
                            FontSize="18"
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"></TextBlock>
-                <Button Command="{Binding OpenAddPersonDialogCommand}"
+                <Button Command="{Binding AddPersonCommand}"
                         Style="{StaticResource addButton}"
                         HorizontalAlignment="Right">
                     <StackPanel Orientation="Horizontal">
@@ -40,81 +40,76 @@
             </Grid>
 
         </Grid>
-        <DataGrid Style="{DynamicResource DataGridStyle1}"
+        <DataGrid x:Name="dataGrid"
+                  Style="{DynamicResource DataGridStyle1}"
                   CellStyle="{DynamicResource DataGridCellStyle1}"
                   ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                   RowStyle="{DynamicResource DataGridRowStyle1}"
                   Grid.Row="1"
                   ItemsSource="{Binding Persons}"
                   Margin="0 0 10 0"
-                  LoadingRow="DataGrid_LoadingRow">
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID"
                                     IsReadOnly="True"
                                     Width="auto"
                                     Binding="{Binding Id}" />
-                <DataGridTextColumn Header="Name"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding Name}" />
-                <DataGridTextColumn Header="First Name"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding FirstName}" />
-                <DataGridTextColumn Header="Last Name"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding LastName}" />
-                <DataGridTextColumn Header="Date of Birth"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding DateOfBirth}" />
-                <DataGridTextColumn Header="Nationality"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding Nationality}" />
-                <DataGridTextColumn Header="Position"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding Position}" />
-                <DataGridTextColumn Header="Shirt Number"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding ShirtNumber}" />
-                <DataGridTextColumn Header="Last Updated"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding LastUpdated}" />
-                <DataGridTextColumn Header="Team ID"
-                                    IsReadOnly="True"
-                                    Width="*"
-                                    Binding="{Binding TeamId}" />
-                <DataGridTemplateColumn Header="Current Team"
-                                        IsReadOnly="True"
+                <DataGridTemplateColumn Header="Name"
                                         Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding CurrentTeam.Name}"
-                                       VerticalAlignment="Center" />
+                            <TextBlock Text="{Binding Name}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="First Name"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FirstName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Last Name"
+                                        Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding LastName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <!-- Add other editable columns similarly -->
                 <DataGridTemplateColumn Header="Operations"
-                                        IsReadOnly="True"
                                         Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
+                               
                                 <Button Style="{StaticResource gridEditButton}"
                                         Cursor="Hand"
-                                        Command="{Binding DataContext.EditPersonCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}">
-                                    <fa:IconImage Icon="Pencil"
+                                        Click="SaveButton_Click">
+                                    <fa:IconImage Icon="Check"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}"
                                         Cursor="Hand"
-                                        Margin="5 0 0 0"
                                         Command="{Binding DataContext.DeletePersonCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                         CommandParameter="{Binding}">
                                     <fa:IconImage Icon="DeleteLeft"
