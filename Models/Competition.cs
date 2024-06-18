@@ -15,7 +15,7 @@ namespace Pomocnik_Rozgrywek.Models
         public string Emblem { get; set; }
         public Season? CurrentSeason { get; set; }
         public ICollection<Team>? Teams { get; set; }
-        public virtual Area? Area { get; set; }
+        public Area? Area { get; set; }
 
     }
 }

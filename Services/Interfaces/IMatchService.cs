@@ -17,5 +17,7 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task ScheduleMatchAsync(Match match);
         Task SetMatchStatusAsync(int matchId, MatchStatus status);
         Task<IEnumerable<Match>> GetMatchesByStatusAsync(MatchStatus status);
+
+        Task<IEnumerable<Match>> ScheduleMatches(Competition competition);
     }
 }

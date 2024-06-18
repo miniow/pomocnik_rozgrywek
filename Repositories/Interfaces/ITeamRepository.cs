@@ -14,5 +14,6 @@ namespace Pomocnik_Rozgrywek.Repositories.Interfaces
         Task<IEnumerable<Team>> GetAllAsync();
         Task<Team> GetByIdAsync(int id);
         Task RemoveAsync(int id);
+        void AttachEntity(Team team);
     }
 }

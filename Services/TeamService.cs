@@ -1,4 +1,5 @@
-﻿using Pomocnik_Rozgrywek.Models;
+﻿using Microsoft.Identity.Client;
+using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
@@ -14,9 +15,12 @@ namespace Pomocnik_Rozgrywek.Services
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly ICompetitonRepository _competitionRepository;
         public TeamService() {
-            _teamRepository = new TeamRepository(new Data.ApplicationDbContext());
-            _personRepository = new PersonRepository(new Data.ApplicationDbContext());
+            var db = new Data.ApplicationDbContext();
+            _teamRepository = new TeamRepository(db);
+            _personRepository = new PersonRepository(db);
+            _competitionRepository = new CompetitionRepository(db);
         }
         public async Task<Team> GetTeamByIdAsync(int id)
         {
@@ -84,5 +88,36 @@ namespace Pomocnik_Rozgrywek.Services
             await _teamRepository.EditAsync(team);
         }
 
+        public async Task AddTeamToCometiton(Team team, Competition competition)
+        {
+            var teamDTO = await _teamRepository.GetByIdAsync(team.Id);
+            var competitionDTO = await _competitionRepository.GetByIdAsync(competition.Id);
+
+            if (teamDTO.RunningCompetitions == null)
+            {
+                teamDTO.RunningCompetitions = new List<Competition>();
+            }
+
+            if (competitionDTO.Teams == null)
+            {
+                competitionDTO.Teams = new List<Team>();
+            }
+
+            if (!teamDTO.RunningCompetitions.Any(c => c.Id == competitionDTO.Id))
+            {
+                teamDTO.RunningCompetitions.Add(competitionDTO);
+            }
+
+            if (!competitionDTO.Teams.Any(t => t.Id == teamDTO.Id))
+            {
+                competitionDTO.Teams.Add(teamDTO);
+            }
+
+            _teamRepository.AttachEntity(teamDTO);
+            _competitionRepository.AttachEntity(competitionDTO);
+
+            await _teamRepository.EditAsync(teamDTO);
+            await _competitionRepository.EditAsync(competitionDTO);
+        }
     }
 }

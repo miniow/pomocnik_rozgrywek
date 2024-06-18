@@ -14,10 +14,13 @@ namespace Pomocnik_Rozgrywek.Services
     {
         private readonly IMatchRepository _matchRepository;
         private readonly ICompetitonRepository _competitonRepository;
+        private readonly ITeamRepository _teamRepository;
         public MatchService()
         {
-            _matchRepository = new MatchRepository(new Data.ApplicationDbContext());
-            _competitonRepository = new CompetitionRepository(new Data.ApplicationDbContext());
+            var db = new Data.ApplicationDbContext();
+            _matchRepository = new MatchRepository(db);
+            _competitonRepository = new CompetitionRepository(db);
+            _teamRepository = new TeamRepository(db);
         }
         public async Task RecordMatchStatistics(int matchId, MatchStatistic homeStatistic, MatchStatistic awayStatistic)
         {
@@ -103,5 +106,43 @@ namespace Pomocnik_Rozgrywek.Services
 
             return await _matchRepository.EditAsync(match);
         }
+
+        public async Task<IEnumerable<Match>> ScheduleMatches(Competition competition)
+        {
+            var numberOfTeams = await _competitonRepository.GetNumberOfTeamsInCompetitonAsync(competition);
+            if (!IsPowerOfTwo(numberOfTeams))
+            {
+                throw new ArgumentException("To low number of teams");
+            }
+            var competitionDTO = await _competitonRepository.GetByIdAsync(competition.Id);
+            var teams = competitionDTO.Teams.ToList();
+            var matches = new List<Match>();
+            var rng = new Random();
+            teams = teams.OrderBy(t => rng.Next()).ToList();
+            for (int i = 0; i < teams.Count; i += 2)
+            {
+                var match = new Match
+                {
+                    Competition = competition,
+                    HomeTeam = teams[i],
+                    AwayTeam = teams[i + 1],
+                    utcDate = DateTime.UtcNow,
+                    Status = MatchStatus.SCHEDULED,
+                    Venue = teams[i].Venue,
+                    Matchday = competition.CurrentSeason.CurrentMatchday,
+                    Stage = competition.CurrentSeason.Stages
+                };
+
+                matches.Add(match);
+            }
+
+
+            return matches;
+        }
+        public bool IsPowerOfTwo(int number)
+        {
+            return (number > 0) && ((number & (number - 1)) == 0);
+        }
     }
+
 }

@@ -24,8 +24,12 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<Competition> EditAsync(Competition competition)
         {
-            _db.Competitions.Entry(competition);
-            await _db.SaveChangesAsync();
+            var existingCompetition = await _db.Competitions.FindAsync(competition.Id);
+            if (existingCompetition != null)
+            {
+                _db.Entry(existingCompetition).CurrentValues.SetValues(competition);
+                await _db.SaveChangesAsync();
+            }
             return competition;
         }
 
@@ -34,14 +38,36 @@ namespace Pomocnik_Rozgrywek.Repositories
             return await _db.Competitions.AsNoTracking().Include(a=>a.Area).ToListAsync();
         }
 
+        public async Task<IEnumerable<Team>> GetAllTeams(Competition competition)
+        {
+            var teams = await _db.Teams.AsNoTracking().Include(t=>t.RunningCompetitions).ToListAsync();
+            var selecteList = new List<Team>();
+            foreach (var team in teams)
+            {
+                if(team.RunningCompetitions != null)
+                {
+                    if (team.RunningCompetitions.Contains(competition))
+                    {
+                        selecteList.Add(team);
+                    }
+                }
+            }
+            return selecteList;
+        }
+
         public async Task<Competition> GetByIdAsync(int id)
         {
-            var competition = await _db.Competitions.FindAsync(id);
+            var competition = await _db.Competitions.AsNoTracking().Include(a=>a.Teams).FirstOrDefaultAsync(c => c.Id == id);
             if (competition == null)
             {
                 throw new KeyNotFoundException($"Competition with Id {id} not found.");
             }
             return competition;
+        }
+
+        public async Task<int> GetNumberOfTeamsInCompetitonAsync(Competition competiton)
+        {
+            return await _db.Competitions.Where(c=> c.Id ==  competiton.Id).SelectMany(c=>c.Teams).CountAsync();
         }
 
         public async Task RemoveAsync(int id)
@@ -53,6 +79,12 @@ namespace Pomocnik_Rozgrywek.Repositories
                 await _db.SaveChangesAsync();
             }
         }
-
+        public void AttachEntity(Competition competition)
+        {
+            if (_db.Entry(competition).State == EntityState.Detached)
+            {
+                _db.Competitions.Attach(competition);
+            }
+        }
     }
 }

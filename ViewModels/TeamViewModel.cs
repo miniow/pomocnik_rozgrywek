@@ -16,6 +16,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
     public class TeamViewModel : ViewModelBase
     {
         private readonly ITeamService _teamService;
+        private readonly ICompetitionService _competitionervice;
         private ObservableCollection<Team> _teams;
         private Team _selectedTeam;
         private bool _isTeamDetailsFlyoutOpen;
@@ -55,10 +56,12 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand UpdateTeamCommand { get; }
         public ICommand DeleteTeamCommand { get; }
         public ICommand ShowTeamDetailsCommand { get; }
+        public ICommand AddToCompetitonCommand { get; }
 
         public TeamViewModel()
         {
             _teamService = new TeamService();
+            _competitionervice = new CompetitionService();
             messageService = GlobalMessageService.GetMessageService();
 
             LoadTeamCommand = new ViewModelCommand(async param => await LoadTeams());
@@ -66,8 +69,26 @@ namespace Pomocnik_Rozgrywek.ViewModels
             UpdateTeamCommand = new ViewModelCommand(async param => await UpdateTeam(param as Team));
             DeleteTeamCommand = new ViewModelCommand(async param => await DeleteTeam(param as Team));
             ShowTeamDetailsCommand = new ViewModelCommand(param => ShowTeamDetails(param as Team));
+            AddToCompetitonCommand = new ViewModelCommand(async param => await AddToCompetiton(param as Team));
 
             LoadTeams();
+        }
+
+        private async Task AddToCompetiton(Team? team)
+        {
+           if(team == null)
+            {
+
+            }
+
+            var competitions = new ObservableCollection<Competition>(await _competitionervice.GetAllCompetitionsAsync());
+            CompetitonSelectDialog csd = new CompetitonSelectDialog(competitions);
+            if(csd.ShowDialog() == true)
+            {
+                var competition = csd.SelectedCompetition;
+                await _teamService.AddTeamToCometiton(team, competition);
+                await LoadTeams();
+            }
         }
 
         private async Task DeleteTeam(Team team)

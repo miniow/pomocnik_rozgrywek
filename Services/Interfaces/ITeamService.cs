@@ -19,7 +19,7 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task AddCoachToTeamAsync(Team team, Person pearson);
         Task RemoveCoachFromTeamAsync(Team team);
         Task RemovePlayerFromTeamAsync(Team team, Person pearson);
-
+        Task AddTeamToCometiton(Team team, Competition competition);
     }
 }
 //interakcje między uczestnikami, którzy podejmują decyzje,

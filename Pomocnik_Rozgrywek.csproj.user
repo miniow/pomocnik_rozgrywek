@@ -22,6 +22,9 @@
     <Compile Update="CustomControls\AreaSelectionDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomControls\CompetitonSelectDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\MessageControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -67,6 +70,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\AreaSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\CompetitonSelectDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\MessageControl.xaml">

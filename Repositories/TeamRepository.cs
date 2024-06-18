@@ -23,19 +23,23 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<Team> EditAsync(Team team)
         {
-            _db.Teams.Update(team);
-            await _db.SaveChangesAsync();
+            var existingTeam = await _db.Teams.FindAsync(team.Id);
+            if (existingTeam != null)
+            {
+                _db.Entry(existingTeam).CurrentValues.SetValues(team);
+                await _db.SaveChangesAsync();
+            }
             return team;
         }
 
         public async Task<IEnumerable<Team>> GetAllAsync()
         {
-            return await _db.Teams.ToListAsync();
+            return await _db.Teams.AsNoTracking().ToListAsync();
         }
 
         public async Task<Team> GetByIdAsync(int id)
         {
-            var team = await _db.Teams.FindAsync(id);
+            var team = await _db.Teams.AsNoTracking().Include(t=>t.RunningCompetitions).Include(t=>t.Squad).FirstOrDefaultAsync(t=>t.Id == id);
             if (team == null)
             {
                 throw new KeyNotFoundException($"Team with Id {id} not found.");
@@ -50,6 +54,13 @@ namespace Pomocnik_Rozgrywek.Repositories
             {
                 _db.Teams.Remove(team);
                 await _db.SaveChangesAsync();
+            }
+        }
+        public void AttachEntity(Team team)
+        {
+            if (_db.Entry(team).State == EntityState.Detached)
+            {
+                _db.Teams.Attach(team);
             }
         }
     }

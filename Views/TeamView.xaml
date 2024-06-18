@@ -105,14 +105,6 @@
                                     <fa:IconImage Icon="Check"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
-                                <Button Style="{StaticResource gridRemoveButton}"
-                                        Cursor="Hand"
-                                        Margin="5 0 0 0"
-                                        Command="{Binding DataContext.DeleteTeamCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}">
-                                    <fa:IconImage Icon="DeleteLeft"
-                                                  Style="{StaticResource gridButtonIcon}" />
-                                </Button>
                                 <Button Style="{StaticResource gridEditButton}"
                                         Cursor="Hand"
                                         Margin="5 0 0 0"
@@ -121,6 +113,23 @@
                                     <fa:IconImage Icon="CircleInfo"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
+                                <Button Style="{StaticResource gridEditButton}"
+                                        Cursor="Hand"
+                                        Margin="5 0 0 0"
+                                        Command="{Binding DataContext.AddToCompetitonCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="PlusCircle"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
+                                <Button Style="{StaticResource gridRemoveButton}"
+                                        Cursor="Hand"
+                                        Margin="5 0 0 0"
+                                        Command="{Binding DataContext.DeleteTeamCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="DeleteLeft"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
+                                
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -156,7 +165,7 @@
 
                         <TextBlock Text="Coach:"
                                    FontWeight="Bold" />
-                        <TextBlock Text="{Binding SelectedTeam.Coach.Name}" />
+                        <TextBlock Text="{Binding SelectedTeam.Coach.FirstName}" />
 
                         <TextBlock Text="Squad:"
                                    FontWeight="Bold" />
