@@ -16,28 +16,22 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<Competition> AddAsync(Competition competition)
         {
-            try
-            {
-                await _db.Competitions.AddAsync(competition);
-                await _db.SaveChangesAsync();
-            }catch(Exception ex)
-            {
-                var a  = ex.ToString();
-            }
-            
+
+            await _db.Competitions.AddAsync(competition);
+             await _db.SaveChangesAsync();
             return competition;
         }
 
         public async Task<Competition> EditAsync(Competition competition)
         {
-            _db.Competitions.Update(competition);
+            _db.Competitions.Entry(competition);
             await _db.SaveChangesAsync();
             return competition;
         }
 
         public async Task<IEnumerable<Competition>> GetAllAsync()
         {
-            return await _db.Competitions.ToListAsync();
+            return await _db.Competitions.AsNoTracking().Include(a=>a.Area).ToListAsync();
         }
 
         public async Task<Competition> GetByIdAsync(int id)
@@ -59,5 +53,6 @@ namespace Pomocnik_Rozgrywek.Repositories
                 await _db.SaveChangesAsync();
             }
         }
+
     }
 }

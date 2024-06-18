@@ -15,6 +15,7 @@ namespace Pomocnik_Rozgrywek.Services.Interfaces
         Task<Person> CreatePersonAsync(Person player);
         Task<Person> UpdatePersonAsync(Person player);
         Task DeletePersonAsync(int id);
-        Task SetPlayerCurrentTeam(Person player, Team team);
+        Task AddToTeam(Person player, Team team);
+        Task AppointAsCoach(Person person, Team team);
     }
 }

@@ -19,7 +19,13 @@
     <Compile Update="CustomControls\AddTeamDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomControls\AreaSelectionDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\MessageControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="CustomControls\TeamSelectionDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\AreaView.xaml.cs">
@@ -60,7 +66,13 @@
     <Page Update="CustomControls\AddTeamDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="CustomControls\AreaSelectionDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\MessageControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\TeamSelectionDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="MainWindow.xaml">

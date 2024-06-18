@@ -13,12 +13,21 @@ namespace Pomocnik_Rozgrywek.Services
     public class MatchService : IMatchService
     {
         private readonly IMatchRepository _matchRepository;
-
+        private readonly ICompetitonRepository _competitonRepository;
         public MatchService()
         {
             _matchRepository = new MatchRepository(new Data.ApplicationDbContext());
+            _competitonRepository = new CompetitionRepository(new Data.ApplicationDbContext());
         }
-
+        public async Task RecordMatchStatistics(int matchId, MatchStatistic homeStatistic, MatchStatistic awayStatistic)
+        {
+            var match = await _matchRepository.GetByIdAsync(matchId);
+            if (match != null)
+            {
+                match.AwayStatistic= homeStatistic;
+                match.AwayStatistic = awayStatistic;
+            }
+        }
         public async Task<Match> CreateMatchAsync(Match match)
         {
             if (match == null)

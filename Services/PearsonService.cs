@@ -1,10 +1,12 @@
-﻿using Pomocnik_Rozgrywek.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,21 +41,31 @@ namespace Pomocnik_Rozgrywek.Services
             return await _personRepository.GetByIdAsync(id);
         }
 
-        public async Task SetPlayerCurrentTeam(Person player, Team team)
-        {
-            player.CurrentTeam = team;
-            if(team.Squad!= null)
-            {
-                team.Squad.Add(player);
-                await _teamRepository.EditAsync(team);
-                await _personRepository.EditAsync(player);
-            }
-            return;
-        }
-
         public async Task<Person> UpdatePersonAsync(Person player)
         {
             return await _personRepository.EditAsync(player);
+        }
+
+        public async Task AddToTeam(Person player, Team team)
+        {
+            if (team.Squad.IsNullOrEmpty())
+            {
+                team.Squad = new List<Person>();
+            }
+            player.CurrentTeam = team;
+            team.Squad.Add(player);
+            await _teamRepository.EditAsync(team);
+            await _personRepository.EditAsync(player);
+            return;
+        }
+
+        public async Task AppointAsCoach(Person person, Team team)
+        {
+            team.Coach = person;
+            person.CurrentTeam = team;
+            await _teamRepository.EditAsync(team);
+            await _personRepository.EditAsync(person);
+            return;
         }
     }
 }

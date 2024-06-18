@@ -14,7 +14,8 @@ using System.Windows.Input;
 namespace Pomocnik_Rozgrywek.ViewModels
 {
     public class AreaViewModel : ViewModelBase
-    { 
+    {
+        private GlobalMessageService messageService;
         private readonly IAreaService _areaService;
         private ObservableCollection<Area> _areas;
         private Area _selectedArea;

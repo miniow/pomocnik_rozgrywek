@@ -28,16 +28,14 @@ namespace Pomocnik_Rozgrywek.CustomControls
         private string _errorMessage = "";
         public string ErrorMessage { get { return _errorMessage; } set { _errorMessage = value; OnPropertyChanged(nameof(ErrorMessage)); } }
         public Competition Competition { get; set; }
-        public ObservableCollection<Season> Seasons { get; set; }
-        public Season SelectedSeason { get; set; }
 
-        public AddCompetitionDialog(ObservableCollection<Season> seasons)
+
+        public AddCompetitionDialog()
         {
             InitializeComponent();
             DataContext = this;
             Competition = new Competition();
-            Seasons = seasons;
-            season_cb.ItemsSource = Seasons;
+
         }
 
         private void BrowseButton_Click(object sender, RoutedEventArgs e)
@@ -72,17 +70,12 @@ namespace Pomocnik_Rozgrywek.CustomControls
                 ErrorMessage = "Trype is required.";
                 return;
             }
-            if(season_cb.SelectedItem == null)
-            {
-                ErrorMessage = "Trye is required.";
-                return;
-            }
+           
 
             Competition.Name = name_tb.Text;
             Competition.Code = code_tb.Text;
             Competition.Type = type_tb.Text;
             Competition.Emblem = emblem_tb.Text;
-            Competition.CurrentSeason = (Season)season_cb.SelectedItem;
             OnCompetitionCreated?.Invoke(Competition);
             Close();
         }

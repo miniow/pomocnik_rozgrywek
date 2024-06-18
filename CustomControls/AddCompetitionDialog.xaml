@@ -130,17 +130,6 @@
 
                 <TextBlock Grid.Row="4"
                            Grid.Column="0"
-                           Text="Season:"
-                           HorizontalAlignment="Right"
-                           Margin="5"
-                           Padding="5" />
-                <ComboBox Grid.Row="4"
-                          Grid.Column="1"
-                          x:Name="season_cb"
-                          Margin="3" />
-
-                <TextBlock Grid.Row="5"
-                           Grid.Column="0"
                            Foreground="Red"
                            FontWeight="Medium"
                            Text="{Binding ErrorMessage}"

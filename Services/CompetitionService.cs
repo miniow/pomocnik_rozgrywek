@@ -1,4 +1,5 @@
-﻿using Pomocnik_Rozgrywek.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
@@ -14,33 +15,31 @@ namespace Pomocnik_Rozgrywek.Services
     public class CompetitionService : ICompetitionService
     {
         private readonly ICompetitonRepository _competitionRepository;
+        private readonly IAreaRepository _areaRepository;
         private readonly ISeasonRepository _seasonRepository;
 
         public CompetitionService()
         {
             _competitionRepository = new CompetitionRepository(new Data.ApplicationDbContext());
+            _areaRepository = new AreaRepository(new Data.ApplicationDbContext());
             _seasonRepository = new SeasonRepository(new Data.ApplicationDbContext());
         }
-        public async Task<Competition> CreateCompetitionAsync(Competition competition)
-        {
-            if (competition == null)
-                throw new ArgumentNullException(nameof(competition));
 
-            return await _competitionRepository.AddAsync(competition);
+        public async Task AddToArea(Competition competition, Area area)
+        {
+            if(area.Competitions.IsNullOrEmpty())
+            {
+                area.Competitions = new List<Competition>();
+            }
+            competition.Area = area;
+            area.Competitions.Add(competition);
+            await _competitionRepository.EditAsync(competition);
+            await _areaRepository.EditAsync(area);
         }
 
-        public async Task CreateTournamentAsync(Competition competition)
+        public async Task<Competition> CreateCompetitionAsync(Competition competition)
         {
-            if (competition == null)
-                throw new ArgumentNullException(nameof(competition));
-            try
-            {
-                await _competitionRepository.AddAsync(competition);
-            }catch (Exception ex)
-            {
-                ex.ToString();
-            }
-            
+            return await _competitionRepository.AddAsync(competition);
         }
 
         public async Task DeleteCompetitionAsync(int id)

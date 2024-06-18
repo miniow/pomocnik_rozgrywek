@@ -16,16 +16,18 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<Person> AddAsync(Person person)
         {
+            person.LastUpdated = DateTime.Now;
             await _db.Person.AddAsync(person);
             await _db.SaveChangesAsync();
             return person;
         }
 
-        public async Task<Person> EditAsync(Person peroson)
+        public async Task<Person> EditAsync(Person person)
         {
-            _db.Person.Update(peroson);
+            person.LastUpdated = DateTime.Now;
+            _db.Person.Entry(person);
             await _db.SaveChangesAsync();
-            return peroson;
+            return person;
         }
 
         public async Task RemoveAsync(int id)
@@ -50,7 +52,7 @@ namespace Pomocnik_Rozgrywek.Repositories
 
         public async Task<IEnumerable<Person>> GetAllAsync()
         {
-            return await _db.Person.ToListAsync();
+            return await _db.Person.Include(p=>p.CurrentTeam).ToListAsync();
         }
     }
 }
