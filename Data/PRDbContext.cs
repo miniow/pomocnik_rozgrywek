@@ -26,17 +26,18 @@ namespace Pomocnik_Rozgrywek.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Person>()
+                .HasOne(p=>p.CurrentTeam)
+                .WithMany(t=>t.Squad)
+                .HasForeignKey(p=>p.TeamId)
+                .OnDelete(DeleteBehavior.SetNull);
+
             modelBuilder.Entity<Area>()
             .HasMany(a => a.ChildAreas)
             .WithOne()
             .HasForeignKey(a => a.ParentAreaId)
             .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Person>()
-                .HasOne(p => p.CurrentTeam)
-                .WithMany(t => t.Squad)
-                .HasForeignKey(p => p.TeamId)
-                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.AwayTeam)
@@ -44,10 +45,6 @@ namespace Pomocnik_Rozgrywek.Data
                 .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.HomeTeam)
-                .WithMany()
-                .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Match>()
-                .HasOne(m => m.Season)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pomocnik_Rozgrywek.Data;
 
@@ -11,9 +12,11 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618183511_recover2")]
+    partial class recover2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,6 +87,9 @@ namespace Pomocnik_Rozgrywek.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CompetitionId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CurrentSeasonId")
                         .HasColumnType("int");
 
@@ -102,6 +108,8 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AreaId");
+
+                    b.HasIndex("CompetitionId");
 
                     b.HasIndex("CurrentSeasonId");
 
@@ -366,6 +374,10 @@ namespace Pomocnik_Rozgrywek.Migrations
                         .WithMany("Competitions")
                         .HasForeignKey("AreaId");
 
+                    b.HasOne("Pomocnik_Rozgrywek.Models.Competition", null)
+                        .WithMany("Competitions")
+                        .HasForeignKey("CompetitionId");
+
                     b.HasOne("Pomocnik_Rozgrywek.Models.Season", "CurrentSeason")
                         .WithMany("Competitions")
                         .HasForeignKey("CurrentSeasonId");
@@ -436,6 +448,11 @@ namespace Pomocnik_Rozgrywek.Migrations
                 {
                     b.Navigation("ChildAreas");
 
+                    b.Navigation("Competitions");
+                });
+
+            modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Competition", b =>
+                {
                     b.Navigation("Competitions");
                 });
 

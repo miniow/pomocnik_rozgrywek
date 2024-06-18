@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class recover : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -86,7 +86,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateOfBirth = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -122,8 +121,8 @@ namespace Pomocnik_Rozgrywek.Migrations
                     Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Emblem = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CurrentSeasonId = table.Column<int>(type: "int", nullable: false),
-                    AreaId = table.Column<int>(type: "int", nullable: false),
+                    CurrentSeasonId = table.Column<int>(type: "int", nullable: true),
+                    AreaId = table.Column<int>(type: "int", nullable: true),
                     TeamId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -133,8 +132,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                         name: "FK_Competitions_Areas_AreaId",
                         column: x => x.AreaId,
                         principalTable: "Areas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Competitions_Teams_TeamId",
                         column: x => x.TeamId,
@@ -304,8 +302,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                 table: "Competitions",
                 column: "CurrentSeasonId",
                 principalTable: "Seasons",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />

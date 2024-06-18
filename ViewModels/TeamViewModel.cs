@@ -17,6 +17,8 @@ namespace Pomocnik_Rozgrywek.ViewModels
     {
         private readonly ITeamService _teamService;
         private ObservableCollection<Team> _teams;
+        private Team _selectedTeam;
+        private bool _isTeamDetailsFlyoutOpen;
 
 
         public ObservableCollection<Team> Teams
@@ -28,13 +30,31 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(Teams));
             }
         }
+        public Team SelectedTeam
+        {
+            get { return _selectedTeam; }
+            set
+            {
+                _selectedTeam = value;
+                OnPropertyChanged(nameof(SelectedTeam));
+            }
+        }
+        public bool IsTeamDetailsFlyoutOpen
+        {
+            get { return _isTeamDetailsFlyoutOpen; }
+            set
+            {
+                _isTeamDetailsFlyoutOpen = value;
+                OnPropertyChanged(nameof(IsTeamDetailsFlyoutOpen));
+            }
+        }
 
 
         public ICommand LoadTeamCommand { get; }
         public ICommand AddTeamCommand { get; }
         public ICommand UpdateTeamCommand { get; }
         public ICommand DeleteTeamCommand { get; }
-
+        public ICommand ShowTeamDetailsCommand { get; }
 
         public TeamViewModel()
         {
@@ -45,6 +65,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             AddTeamCommand = new ViewModelCommand(async param => await AddTeam(param as Team));
             UpdateTeamCommand = new ViewModelCommand(async param => await UpdateTeam(param as Team));
             DeleteTeamCommand = new ViewModelCommand(async param => await DeleteTeam(param as Team));
+            ShowTeamDetailsCommand = new ViewModelCommand(param => ShowTeamDetails(param as Team));
 
             LoadTeams();
         }
@@ -103,6 +124,11 @@ namespace Pomocnik_Rozgrywek.ViewModels
         private async Task LoadTeams()
         {
             Teams = new ObservableCollection<Team>(await _teamService.GetAllTeamsAsync());
+        }
+        private void ShowTeamDetails(Team team)
+        {
+            SelectedTeam = team;
+            IsTeamDetailsFlyoutOpen = true;
         }
     }
 }

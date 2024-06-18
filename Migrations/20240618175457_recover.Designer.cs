@@ -12,8 +12,8 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240618001110_competiton fileds optional")]
-    partial class competitonfiledsoptional
+    [Migration("20240618175457_recover")]
+    partial class recover
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -240,9 +240,6 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nationality")
                         .HasColumnType("nvarchar(max)");

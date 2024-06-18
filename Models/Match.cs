@@ -9,7 +9,6 @@ namespace Pomocnik_Rozgrywek.Models
     public class Match
     {
         public Competition Competition { get; set; }
-        public Season Season { get; set; }
 
         public int Id { get; set; }
         public DateTime utcDate { get; set; }

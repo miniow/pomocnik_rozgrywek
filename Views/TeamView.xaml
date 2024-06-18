@@ -6,6 +6,7 @@
              xmlns:viewModel="clr-namespace:Pomocnik_Rozgrywek.ViewModels"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:Pomocnik_Rozgrywek.Views"
+             xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -112,11 +113,67 @@
                                     <fa:IconImage Icon="DeleteLeft"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
+                                <Button Style="{StaticResource gridEditButton}"
+                                        Cursor="Hand"
+                                        Margin="5 0 0 0"
+                                        Command="{Binding DataContext.ShowTeamDetailsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <fa:IconImage Icon="CircleInfo"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <metro:FlyoutsControl Grid.Row="1">
+            <metro:Flyout x:Name="TeamDetailsFlyout"
+                          Header="Team Details"
+                          Position="Left"
+                          IsOpen="{Binding IsTeamDetailsFlyoutOpen}"
+                          CloseButtonVisibility="Visible"
+                          ClosingFinished="TeamDetailsFlyout_ClosingFinished"
+                          Width="400"
+                          Height="600"
+                          Background="LightGray">
+                <Border BorderBrush="Gray"
+                        BorderThickness="1"
+                        Padding="10">
+                    <StackPanel>
+                        <TextBlock Text="Team Name:"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedTeam.Name}" />
+
+                        <TextBlock Text="Short Name:"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedTeam.ShortName}" />
+
+                        <TextBlock Text="Tla:"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedTeam.Tla}" />
+
+                        <TextBlock Text="Coach:"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding SelectedTeam.Coach.Name}" />
+
+                        <TextBlock Text="Squad:"
+                                   FontWeight="Bold" />
+                        <ItemsControl ItemsSource="{Binding SelectedTeam.Squad}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding FirstName}"
+                                                   Margin="0,0,5,0" />
+                                        <TextBlock Text="{Binding LastName}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </metro:Flyout>
+        </metro:FlyoutsControl>
     </Grid>
 </UserControl>

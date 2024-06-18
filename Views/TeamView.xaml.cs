@@ -64,5 +64,13 @@ namespace Pomocnik_Rozgrywek.Views
                 }
             }
         }
+        private void TeamDetailsFlyout_ClosingFinished(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as TeamViewModel;
+            if (viewModel != null)
+            {
+                viewModel.IsTeamDetailsFlyoutOpen = false;
+            }
+        }
     }
 }

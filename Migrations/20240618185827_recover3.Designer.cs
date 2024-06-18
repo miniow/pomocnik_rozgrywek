@@ -12,8 +12,8 @@ using Pomocnik_Rozgrywek.Data;
 namespace Pomocnik_Rozgrywek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240617202040_init")]
-    partial class init
+    [Migration("20240618185827_recover3")]
+    partial class recover3
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace Pomocnik_Rozgrywek.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CompetitionTeam", b =>
+                {
+                    b.Property<int>("RunningCompetitionsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RunningCompetitionsId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("CompetitionTeam");
+                });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Area", b =>
                 {
@@ -65,14 +80,14 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AreaId")
+                    b.Property<int?>("AreaId")
                         .HasColumnType("int");
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CurrentSeasonId")
+                    b.Property<int?>("CurrentSeasonId")
                         .HasColumnType("int");
 
                     b.Property<string>("Emblem")
@@ -83,9 +98,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -95,8 +107,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasIndex("AreaId");
 
                     b.HasIndex("CurrentSeasonId");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Competitions");
                 });
@@ -136,9 +146,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Property<int>("Minute")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeasonId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Stage")
                         .HasColumnType("int");
 
@@ -163,8 +170,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasIndex("HomeStatisticId");
 
                     b.HasIndex("HomeTeamId");
-
-                    b.HasIndex("SeasonId");
 
                     b.ToTable("Matches");
                 });
@@ -241,9 +246,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Property<DateTime?>("LastUpdated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Nationality")
                         .HasColumnType("nvarchar(max)");
 
@@ -278,9 +280,6 @@ namespace Pomocnik_Rozgrywek.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CompetitionId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CurrentMatchday")
                         .HasColumnType("int");
 
@@ -293,14 +292,7 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("WinnerId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("CompetitionId");
-
-                    b.HasIndex("WinnerId");
 
                     b.ToTable("Seasons");
                 });
@@ -348,6 +340,21 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("CompetitionTeam", b =>
+                {
+                    b.HasOne("Pomocnik_Rozgrywek.Models.Competition", null)
+                        .WithMany()
+                        .HasForeignKey("RunningCompetitionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Pomocnik_Rozgrywek.Models.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Area", b =>
                 {
                     b.HasOne("Pomocnik_Rozgrywek.Models.Area", null)
@@ -360,19 +367,11 @@ namespace Pomocnik_Rozgrywek.Migrations
                 {
                     b.HasOne("Pomocnik_Rozgrywek.Models.Area", "Area")
                         .WithMany("Competitions")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AreaId");
 
                     b.HasOne("Pomocnik_Rozgrywek.Models.Season", "CurrentSeason")
-                        .WithMany()
-                        .HasForeignKey("CurrentSeasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Pomocnik_Rozgrywek.Models.Team", null)
-                        .WithMany("RunningCompetitions")
-                        .HasForeignKey("TeamId");
+                        .WithMany("Competitions")
+                        .HasForeignKey("CurrentSeasonId");
 
                     b.Navigation("Area");
 
@@ -411,12 +410,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Pomocnik_Rozgrywek.Models.Season", "Season")
-                        .WithMany()
-                        .HasForeignKey("SeasonId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("AwayStatistic");
 
                     b.Navigation("AwayTeam");
@@ -426,8 +419,6 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Navigation("HomeStatistic");
 
                     b.Navigation("HomeTeam");
-
-                    b.Navigation("Season");
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Person", b =>
@@ -435,26 +426,13 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.HasOne("Pomocnik_Rozgrywek.Models.Team", "CurrentTeam")
                         .WithMany("Squad")
                         .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Pomocnik_Rozgrywek.Models.Team", null)
                         .WithOne("Coach")
                         .HasForeignKey("Pomocnik_Rozgrywek.Models.Person", "TeamId1");
 
                     b.Navigation("CurrentTeam");
-                });
-
-            modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Season", b =>
-                {
-                    b.HasOne("Pomocnik_Rozgrywek.Models.Competition", null)
-                        .WithMany("Seasons")
-                        .HasForeignKey("CompetitionId");
-
-                    b.HasOne("Pomocnik_Rozgrywek.Models.Team", "Winner")
-                        .WithMany()
-                        .HasForeignKey("WinnerId");
-
-                    b.Navigation("Winner");
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Area", b =>
@@ -464,16 +442,14 @@ namespace Pomocnik_Rozgrywek.Migrations
                     b.Navigation("Competitions");
                 });
 
-            modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Competition", b =>
+            modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Season", b =>
                 {
-                    b.Navigation("Seasons");
+                    b.Navigation("Competitions");
                 });
 
             modelBuilder.Entity("Pomocnik_Rozgrywek.Models.Team", b =>
                 {
                     b.Navigation("Coach");
-
-                    b.Navigation("RunningCompetitions");
 
                     b.Navigation("Squad");
                 });
