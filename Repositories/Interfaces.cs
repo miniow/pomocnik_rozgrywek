@@ -26,7 +26,7 @@ namespace Pomocnik_Rozgrywek.Repositories
         Task RemoveAsync(int id);
         Task<int> GetNumberOfTeamsInCompetitionAsync(Competition competition);
         Task<IEnumerable<Team>> GetAllTeamsAsync(Competition competition);
-
+        Task RemoveFromTournamentAsync(Team losingTeam);
     }
 
     public interface IMatchRepository

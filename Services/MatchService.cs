@@ -114,16 +114,35 @@ namespace Pomocnik_Rozgrywek.Services
             if(match.HomeStatistic.Goals > match.AwayStatistic.Goals)
             {
                 match.Winer = match.HomeTeam;
-            }
-
-            if(match.HomeStatistic.Goals < match.AwayStatistic.Goals)
+                await RemoveLosingTeamFromTournament(match.AwayTeam);
+            } else if(match.HomeStatistic.Goals < match.AwayStatistic.Goals)
             {
                 match.Winer = match.AwayTeam;
+                await RemoveLosingTeamFromTournament(match.HomeTeam);
+            }
+            else
+            {
+                var random = new Random();
+                int  num = random.Next(0,2);
+                if(num == 0)
+                {
+                    match.Winer = match.HomeTeam;
+                    await RemoveLosingTeamFromTournament(match.AwayTeam);
+                }
+                else
+                {
+                    match.Winer = match.AwayTeam;
+                    await RemoveLosingTeamFromTournament(match.HomeTeam);
+                }
             }
             match.Status = MatchStatus.ENDED;
             return await _matchRepository.EditAsync(match);
         }
+        private async Task RemoveLosingTeamFromTournament(Team losingTeam)
+        {
 
+            await _competitonRepository.RemoveFromTournamentAsync(losingTeam);
+        }
         public async Task<IEnumerable<Match>> ScheduleMatches(Competition competition)
         {
             var numberOfTeams = await _competitonRepository.GetNumberOfTeamsInCompetitionAsync(competition);

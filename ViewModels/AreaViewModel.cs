@@ -15,7 +15,6 @@ namespace Pomocnik_Rozgrywek.ViewModels
 {
     public class AreaViewModel : ViewModelBase
     {
-        private GlobalMessageService _messageService;
         private readonly IAreaService _areaService;
         private ObservableCollection<Area> _areas;
         private Area _selectedArea;
@@ -56,7 +55,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand DeleteAreaCommand { get; }
         public AreaViewModel()
         {
-            _messageService = GlobalMessageService.GetMessageService();
+            messageService = GlobalMessageService.GetMessageService();
             _areaService = new AreaService();
             AddChildAreaCommand = new ViewModelCommand(async param => await AddChildArea(param as Area));
             LoadAreasCommand = new ViewModelCommand(async param => await LoadAreas());
@@ -75,10 +74,10 @@ namespace Pomocnik_Rozgrywek.ViewModels
             }
             catch (Exception ex)
             {
-                _messageService.AddMessage(new ErrorMessage("Cannot delete Area" + ex.ToString()));
+                messageService.AddMessage(new ErrorMessage("Cannot delete Area" + ex.ToString()));
                 return;
             }
-            _messageService.AddMessage(new SuccessMessage("Area deleted succesfully"));
+            messageService.AddMessage(new SuccessMessage("Area deleted succesfully"));
             await LoadAreas();
         }
 
@@ -90,9 +89,9 @@ namespace Pomocnik_Rozgrywek.ViewModels
             }
             catch (Exception ex)
             {
-                _messageService.AddMessage(new ErrorMessage("Cannot update Area" + ex.ToString()));
+                messageService.AddMessage(new ErrorMessage("Cannot update Area" + ex.ToString()));
             }
-            _messageService.AddMessage(new ErrorMessage("Area updated succesfully"));
+            messageService.AddMessage(new ErrorMessage("Area updated succesfully"));
 
             await LoadAreas();
         }
@@ -117,7 +116,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             }
             if (area == null)
             {
-                _messageService.AddMessage(new ValidationMessage("Problemn have occured durring adding.Chose correct area"));
+                messageService.AddMessage(new ValidationMessage("Problemn have occured durring adding.Chose correct area"));
             }
             var addAreaDialog = new AddAreaDialog();
             addAreaDialog.OnAreaCreated += async (newArea) =>

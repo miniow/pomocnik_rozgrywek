@@ -138,6 +138,9 @@
     <Page Update="Views\SeasonView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\TeamView.xaml">
       <SubType>Designer</SubType>
     </Page>

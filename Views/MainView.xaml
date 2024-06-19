@@ -40,6 +40,9 @@
         <DataTemplate DataType="{x:Type viewModel:SeasonViewModel}">
             <local:SeasonView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModel:SettingsViewModel}">
+            <local:SettingsView />
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="10"
@@ -186,6 +189,20 @@
                                 <fa:IconImage Icon="Calendar"
                                               Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Text="Season"
+                                           Style="{StaticResource menuButtonText}" />
+
+                            </StackPanel>
+
+                        </RadioButton>
+                        <RadioButton Style="{StaticResource menuButton}"
+                                     Tag="{StaticResource menuButtonText}"
+                                     Margin="0,0,0,0"
+                                     Command="{Binding ShowLogsViewCommand}">
+                            <StackPanel Orientation="Horizontal">
+
+                                <fa:IconImage Icon="Gear"
+                                              Style="{StaticResource menuButtonIcon}" />
+                                <TextBlock Text="Logs"
                                            Style="{StaticResource menuButtonText}" />
 
                             </StackPanel>

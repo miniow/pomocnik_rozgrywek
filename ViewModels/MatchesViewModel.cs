@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Pomocnik_Rozgrywek.CustomControls;
+using Pomocnik_Rozgrywek.Messanger;
 
 namespace Pomocnik_Rozgrywek.ViewModels
 {
@@ -31,6 +32,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
     {
         private readonly IMatchService _matchService;
         private readonly ICompetitionService _competitionService;
+        private GlobalMessageService _messageService;
         private ObservableCollection<Match> _matches;
         private Match _selectedMatch;
         private CompetitionStage _selectedStage;
@@ -74,7 +76,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public MatchesViewModel() {
             _matchService = new MatchService();
             _competitionService = new CompetitionService();
-
+            _messageService = GlobalMessageService.GetMessageService();
             LoadMatchesCommand = new ViewModelCommand(async param => await LoadMatches());
             AddMatchCommand = new ViewModelCommand(async param => await AddMatch(param as Match));
             UpdateMatchCommand = new ViewModelCommand(async param => await UpdateMatch(param as Match));
@@ -84,7 +86,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             Stages = EnumHelper.GetEnumValues<CompetitionStage>();
             LoadMatches();
         }
-        private void AddStatistics(Match match)
+        private async void AddStatistics(Match match)
         {
             if (match == null) return;
 
@@ -95,8 +97,10 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 var awayStatistic = addStatisticsDialog.AwayStatistic;
                 match.HomeStatistic = homeStatistics;
                 match.AwayStatistic = awayStatistic;
-                _matchService.UpdateMatchAsync(match);
-                LoadMatches();  // Reload matches to reflect the changes
+               await _matchService.UpdateMatchAsync(match);
+               // await _matchService.ScheduleMatches(match.Competition);
+
+                await LoadMatches();
             }
         }
         private async Task ScheduleMatches()
@@ -106,49 +110,96 @@ namespace Pomocnik_Rozgrywek.ViewModels
             if (csd.ShowDialog() == true)
             {
                 var competition = csd.SelectedCompetition;
-                var scheduledMatches = await _matchService.ScheduleMatches(competition);
-                foreach (var match in scheduledMatches)
+                try
                 {
-                    Matches.Add(match);
+                    var scheduledMatches = await _matchService.ScheduleMatches(competition);
+                    foreach (var match in scheduledMatches)
+                    {
+                        Matches.Add(match);
+                    }
+                }catch (Exception ex)
+                {
+                    _messageService.AddMessage(new ErrorMessage(ex.ToString()));
                 }
+                _messageService.AddMessage(new SuccessMessage("Matches scheduled successfully"));
+                
             }
         }
 
         private async Task LoadMatches()
         {
-            Matches = new ObservableCollection<Match>(await _matchService.GetAllMatchsAsync());
+            try
+            {
+                Matches = new ObservableCollection<Match>(await _matchService.GetAllMatchsAsync());
+            }catch(Exception ex)
+            {
+                _messageService.AddMessage(new ErrorMessage(ex.ToString()));
+            }
+            _messageService.AddMessage(new InfoMessage("Matches loaded"));
+
         }
 
         private async Task AddMatch(Match match)
         {
-
-            var addedMatch = await _matchService.CreateMatchAsync(match);
-            Matches.Add(addedMatch);
+            try
+            {
+                var addedMatch = await _matchService.CreateMatchAsync(match);
+                Matches.Add(addedMatch);
+            }catch(Exception ex)
+            {
+                _messageService.AddMessage(new ErrorMessage(ex.ToString()));
+            }
+            _messageService.AddMessage(new SuccessMessage("match added succesfuly"));
         }
 
         private async Task UpdateMatch(Match match)
         {
             if (SelectedMatch != null)
             {
-                var updatedMatch = await _matchService.UpdateMatchAsync(SelectedMatch);
+                try
+                {
+                    var updatedMatch = await _matchService.UpdateMatchAsync(SelectedMatch);
+                }catch(Exception es)
+                {
+                    _messageService.AddMessage(new ErrorMessage(es.ToString()));
+                }
+                _messageService.AddMessage(new InfoMessage("match updated"));
+
             }
         }
 
         private async Task DeleteMatch(Match match)
         {
+            try
+            {
+
+           
             if (SelectedMatch != null)
             {
                 await _matchService.DeleteMatchAsync(SelectedMatch.Id);
                 Matches.Remove(SelectedMatch);
             }
+            }catch(Exception ex)
+            {
+                _messageService.AddMessage(new ErrorMessage(ex.ToString()));
+            }
+            _messageService.AddMessage(new WarningMessage("match deleted"));
+
         }
         private void FilterBystages()
         {
-            if (_matches == null) return;
-            var filteredMatches = allMatches.AsEnumerable();
-            filteredMatches = filteredMatches.Where(m => m.Stage == SelectedStage);
-            Matches = new ObservableCollection<Match>(filteredMatches);
-
+            try
+            {
+                if (_matches == null) return;
+                var filteredMatches = allMatches.AsEnumerable();
+                filteredMatches = filteredMatches.Where(m => m.Stage == SelectedStage);
+                Matches = new ObservableCollection<Match>(filteredMatches);
+            }
+            catch(Exception ex)
+            {
+                _messageService.AddMessage(new ErrorMessage(ex.ToString()));
+            }
+            _messageService.AddMessage(new InfoMessage("matches filtred"));
         }
     }
 }

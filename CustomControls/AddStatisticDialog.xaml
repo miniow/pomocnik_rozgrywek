@@ -97,7 +97,7 @@
             <ComboBox x:Name="awayEventPlayerId_tb"
                       Margin="3"
                       ItemsSource="{Binding AwayTeam }"
-                      SelectedItem="{Binding SelectedHomePlayer, Mode=TwoWay}">
+                      SelectedItem="{Binding SelectedAwayPlayer, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

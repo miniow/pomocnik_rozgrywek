@@ -123,16 +123,16 @@ namespace Pomocnik_Rozgrywek.CustomControls
             switch (eventType)
             {
                 case EventType.Goal:
-                    HomeGoals++;
-                    homeGoalKicks_tb.Text = HomeGoals.ToString();
+                    AwayGoals++;
+                    awayGoalKicks_tb.Text = AwayGoals.ToString();
                     break;
                 case EventType.YellowCard:
-                    HomeYellowCards++;
-                    homeYellowCards_tb.Text = HomeYellowCards.ToString();
+                    AwayYellowCards++;
+                    awayYellowCards_tb.Text = AwayYellowCards.ToString();
                     break;
                 case EventType.RedCard:
-                    HomeRedCards++;
-                    homeRedCards_tb.Text = HomeRedCards.ToString();
+                    AwayRedCards++;
+                    awayRedCards_tb.Text = AwayRedCards.ToString();
                     break;
             }
             AwayStatistic.Events.Add(matchEvent);
