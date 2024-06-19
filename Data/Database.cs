@@ -1,6 +1,8 @@
-﻿using Pomocnik_Rozgrywek.Models;
+﻿using Newtonsoft.Json;
+using Pomocnik_Rozgrywek.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +38,30 @@ namespace Pomocnik_Rozgrywek.Data
                 }
             }
         }
+        public void SaveToFile()
+        {
+            var filePath = "D:\\database.json";
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
+            var json = JsonConvert.SerializeObject(this, settings);
+            File.WriteAllText(filePath, json);
+        }
+
+        public static void LoadFromFile()
+        {
+            var filePath = "D:\\database.json";
+            var json = File.ReadAllText(filePath);
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
+            _instance = JsonConvert.DeserializeObject<Database>(json, settings);
+
+        }
+
     }
 
     public static class DatabaseInitializer

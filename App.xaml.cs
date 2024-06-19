@@ -43,9 +43,20 @@ namespace Pomocnik_Rozgrywek
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
             DatabaseInitializer.Initialize();
+            Database.LoadFromFile();
+
             mainView = new MainView();
             mainView.Show();
         }
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            Database.Instance.SaveToFile();
+        }
+        
+        
+        
+
     }
 
 }

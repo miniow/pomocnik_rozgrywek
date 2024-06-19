@@ -30,6 +30,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand ShowPearsonViewCommand { get; }
         public ICommand ShowMatchViewCommand { get; }
         public ICommand ShowSeasonViewCommand { get; }
+        public ICommand ShowLogsViewCommand { get; }
 
         public MainViewModel()
         {
@@ -40,6 +41,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             ShowPearsonViewCommand = new ViewModelCommand(ExecuteShowPearsonViewCommand);
             ShowMatchViewCommand = new ViewModelCommand(ExecuteShowMatchViewCommand);
             ShowSeasonViewCommand = new ViewModelCommand(ExecuteShowSeasonViewCommand);
+            ShowLogsViewCommand = new ViewModelCommand(ExecuteShowLogsViewCommand);
             ShowHomeViewCommand.Execute(this);
         }
 
@@ -90,6 +92,12 @@ namespace Pomocnik_Rozgrywek.ViewModels
             CurrentChildView = new AreaViewModel();
             Caption = "Areas";
             Icon = IconChar.Globe;
+        }
+        private void ExecuteShowLogsViewCommand(object obj)
+        {
+            CurrentChildView = new SettingsViewModel();
+            Caption = "Settings";
+            Icon = IconChar.Gear;
         }
     }
 }

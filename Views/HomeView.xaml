@@ -27,10 +27,8 @@
                        Margin="10,0,0,0" />
         </StackPanel>
 
-        <!-- Zawartość strony głównej -->
         <StackPanel Grid.Row="1"
                     Margin="20">
-            <!-- Nagłówki i teksty informacyjne -->
             <TextBlock Text="Witamy w aplikacji Pomocnik Rozgrywek"
                        FontSize="20"
                        FontWeight="Bold"

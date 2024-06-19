@@ -43,7 +43,7 @@ namespace Pomocnik_Rozgrywek.Messanger
             ShowMessage(message);
         }
 
-        private void ShowMessage(Message message)
+        private async void ShowMessage(Message message)
         {
             var messageControl = new MessageControl();
             messageControl.SetMessage(message);
@@ -51,13 +51,16 @@ namespace Pomocnik_Rozgrywek.Messanger
             {
                 Child = messageControl,
                 Placement = PlacementMode.Top,
-                StaysOpen = false,
+                StaysOpen = true,
                 AllowsTransparency = true,
                 VerticalOffset = 10,
-                HorizontalOffset = SystemParameters.WorkArea.Width / 2 - 200 
+                HorizontalOffset = SystemParameters.WorkArea.Width / 2 - 200
             };
 
             popup.IsOpen = true;
+
+            await Task.Delay(3000);
+            popup.IsOpen = false;
         }
 
         public ObservableCollection<Message> GetMessages()

@@ -74,7 +74,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(SelectedArea));
                 FilterByArea(SelectedArea);
             }
-        } 
+        }
         public ObservableCollection<Area> Areas
         {
             get { return _areas; }
@@ -116,28 +116,38 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 FilteredCompetitions = new ObservableCollection<Competition>(
                 Competitions.Where(c => c.Area != null && c.Area.Id == SelectedArea.Id));
             }
+            messageService.AddMessage(new InfoMessage("Competitions filtered by area"));
         }
 
         private async Task AddToArea(Competition? competition)
         {
-            Areas = new  ObservableCollection<Area>( await _areaService.GetAllAreasAsync());
+            try
+            {
 
-            if(competition.Area != null)
-            {
-                MessageBoxResult result = MessageBox.Show("The person is already a coach of another team. Are you sure you want to reassign them?",
-                                                     "Warning",
-                                                     MessageBoxButton.YesNo,
-                                                     MessageBoxImage.Warning);
-                if (result == MessageBoxResult.No)
-                    return;
-            }
-            Areas = new ObservableCollection<Area>(await _areaService.GetAllAreasAsync());
-            AreaSelectionDialog asd = new AreaSelectionDialog(Areas);
+                Areas = new ObservableCollection<Area>(await _areaService.GetAllAreasAsync());
+
+                if (competition.Area != null)
+                {
+                    MessageBoxResult result = MessageBox.Show("The person is already a coach of another team. Are you sure you want to reassign them?",
+                                                         "Warning",
+                                                         MessageBoxButton.YesNo,
+                                                         MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.No)
+                        return;
+                }
+                Areas = new ObservableCollection<Area>(await _areaService.GetAllAreasAsync());
+                AreaSelectionDialog asd = new AreaSelectionDialog(Areas);
                 if (asd.ShowDialog() == true)
+                {
+                    var area = asd.SelectedArea;
+                    await _competitionService.AddToArea(competition, area);
+                    await LoadCompetitions();
+                }
+
+            }
+            catch (Exception ex)
             {
-                var area = asd.SelectedArea;
-                await _competitionService.AddToArea(competition, area);
-                await LoadCompetitions();
+                messageService.AddMessage(new ErrorMessage("Cannot add competition to area: " + ex.ToString()));
             }
         }
 
@@ -146,14 +156,15 @@ namespace Pomocnik_Rozgrywek.ViewModels
             try
             {
                 await _competitionService.DeleteCompetitionAsync(competition.Id);
+                messageService.AddMessage(new InfoMessage("Competition deleted succesfully"));
+                await LoadCompetitions();
             }
             catch (Exception ex)
             {
                 messageService.AddMessage(new ErrorMessage("Cannot delete competition" + ex.ToString()));
 
             }
-            messageService.AddMessage(new InfoMessage("Competition deleted succesfully"));
-            await LoadCompetitions();
+            
         }
 
         private async Task UpdateCompetition(Competition? competition)
@@ -213,9 +224,17 @@ namespace Pomocnik_Rozgrywek.ViewModels
 
         private async Task LoadCompetitions()
         {
-            Competitions = new ObservableCollection<Competition>(await _competitionService.GetAllCompetitionsAsync());
-            FilteredCompetitions = Competitions;
-            Areas = new ObservableCollection<Area> (await _areaService.GetAllAreasAsync());
+            try
+            {
+                Competitions = new ObservableCollection<Competition>(await _competitionService.GetAllCompetitionsAsync());
+                FilteredCompetitions = Competitions;
+                Areas = new ObservableCollection<Area>(await _areaService.GetAllAreasAsync());
+                messageService.AddMessage(new InfoMessage("Competitions loaded successfully"));
+            }
+            catch (Exception ex)
+            {
+                messageService.AddMessage(new ErrorMessage("Error loading competitions: " + ex.ToString()));
+            }
         }
     }
 }

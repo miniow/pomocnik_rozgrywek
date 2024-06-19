@@ -25,7 +25,7 @@
                 Margin="5">
             <StackPanel>
                 <TextBlock Text="{Binding HomeTeam.Name}"
-                           Style="{StaticResource LabelMatchCardStyle}" />
+                           Style="{StaticResource LabelMatchCardStyle}" FontSize="45" />
                 <TextBlock Text="vs"
                            HorizontalAlignment="Center"
                            FontSize="20" />

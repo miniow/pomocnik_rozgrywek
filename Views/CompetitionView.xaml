@@ -34,13 +34,14 @@
                            FontWeight="SemiBold"
                            VerticalAlignment="Center"
                            Grid.Column="0"></TextBlock>
-                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
 
 
                     <TextBlock Text="Search:"
                                VerticalAlignment="Center"
-                               Margin="0,0,10,0" />
+                               Style="{StaticResource LabelStyle}" />
                     <TextBox Grid.Column="1"
+                               Style="{StaticResource InputStyle}"
                              VerticalAlignment="Center"
                              Width="200"
                              Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
@@ -174,7 +175,22 @@
                                         Cursor="Hand"
                                         Command="{Binding DataContext.EditCompetitionCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                         CommandParameter="{Binding}">
+                                    <Button.ToolTip>
+                                        <ToolTip Content="Edit Competition" />
+                                    </Button.ToolTip>
                                     <fa:IconImage Icon="Pencil"
+                                                  Style="{StaticResource gridButtonIcon}" />
+                                </Button>
+                                
+                                <Button Style="{StaticResource gridEditButton}"
+                                        Cursor="Hand"
+                                        Margin="5 0 0 0"
+                                        Command="{Binding DataContext.AddToAreaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}">
+                                    <Button.ToolTip>
+                                        <ToolTip Content="Add to Area" />
+                                    </Button.ToolTip>
+                                    <fa:IconImage Icon="PlusCircle"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
                                 <Button Style="{StaticResource gridRemoveButton}"
@@ -182,15 +198,10 @@
                                         Margin="5 0 0 0"
                                         Command="{Binding DataContext.DeleteCompetitionCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                         CommandParameter="{Binding}">
+                                    <Button.ToolTip>
+                                        <ToolTip Content="Delete Competition" />
+                                    </Button.ToolTip>
                                     <fa:IconImage Icon="DeleteLeft"
-                                                  Style="{StaticResource gridButtonIcon}" />
-                                </Button>
-                                <Button Style="{StaticResource gridEditButton}"
-                                        Cursor="Hand"
-                                        Margin="5 0 0 0"
-                                        Command="{Binding DataContext.AddToAreaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        CommandParameter="{Binding}">
-                                    <fa:IconImage Icon="PlusCircle"
                                                   Style="{StaticResource gridButtonIcon}" />
                                 </Button>
                             </StackPanel>

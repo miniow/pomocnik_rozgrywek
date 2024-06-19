@@ -140,6 +140,20 @@ namespace Pomocnik_Rozgrywek.Repositories
         {
             return Task.Run(() => competition.Teams.AsEnumerable());
         }
+
+        public Task RemoveFromTournamentAsync(Team losingTeam)
+        {
+            return Task.Run(() =>
+            {
+                foreach (var competition in _db.Competitions)
+                {
+                    if (competition.Teams != null && competition.Teams.Contains(losingTeam))
+                    {
+                        competition.Teams.Remove(losingTeam);
+                    }
+                }
+            });
+        }
     }
 
     public class MatchRepository : RepositoryBase, IMatchRepository
