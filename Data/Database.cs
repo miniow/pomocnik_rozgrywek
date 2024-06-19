@@ -19,7 +19,7 @@ namespace Pomocnik_Rozgrywek.Data
         public List<Person> People { get; private set; } = new List<Person>();
         public List<Season> Seasons { get; private set; } = new List<Season>();
         public List<Team> Teams { get; private set; } = new List<Team>();
-
+        public List<MatchEvent> MatchEvents { get; private set; } = new List<MatchEvent> { };
         private Database() { }
 
         public static Database Instance
@@ -58,13 +58,23 @@ namespace Pomocnik_Rozgrywek.Data
             var team2 = new Team { Id = 2, Name = "Al Hilal", ShortName = "HIL", Tla = "HIL", Crest = "al_hilal.png", Founded = 1957, ClubColors = "Blue", Venue = "King Fahd Stadium" };
             var team3 = new Team { Id = 1, Name = "Real Madrid", ShortName = "RMA", Tla = "RMA", Crest = "real_madrid.png", Founded = 1902, ClubColors = "White", Venue = "Santiago Bernabéu" };
             var team4 = new Team { Id = 2, Name = "Al Hilal", ShortName = "HIL", Tla = "HIL", Crest = "al_hilal.png", Founded = 1957, ClubColors = "Blue", Venue = "King Fahd Stadium" };
-            db.Teams.AddRange(new[] { team1, team2 ,team3, team4});
+            
 
-            // Initialize People (Players and Coaches)
             var player1 = new Person { Id = 1, FirstName = "Karim", LastName = "Benzema", DateOfBirth = "1987-12-19", Nationality = "French", Position = "Forward", ShirtNumber = 9, CurrentTeam = team1 };
-            var player2 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team2 };
-            db.People.AddRange(new[] { player1, player2 });
-
+            var player2 = new Person { Id = 1, FirstName = "Karim", LastName = "Benzema", DateOfBirth = "1987-12-19", Nationality = "French", Position = "Forward", ShirtNumber = 9, CurrentTeam = team1 };
+            var player3 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team1 };
+            var player4 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team1 };
+            var player5 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team2 };
+            var player6 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team2 };
+            var player7 = new Person { Id = 2, FirstName = "Salem", LastName = "Al-Dawsari", DateOfBirth = "1991-08-19", Nationality = "Saudi Arabian", Position = "Midfielder", ShirtNumber = 29, CurrentTeam = team2 };
+            var players = new List<Person>();
+            var players2 = new List<Person>();
+            players.AddRange(new[] { player1, player2, player3, player4 });
+            players.AddRange(new[] { player5, player6, player7 });
+            team1.Squad = players;
+            team2.Squad = players2;
+            db.Teams.AddRange(new[] { team1, team2, team3, team4 });
+            db.People.AddRange(new[] { player1, player2, player3, player4, player5, player6, player7});
             // Initialize Seasons
             var season1 = new Season { Id = 1, StartDate = new DateOnly(2023, 8, 1), EndDate = new DateOnly(2024, 5, 31), CurrentMatchday = 1, Competitions = new List<Competition> { competition1 } };
             var season2 = new Season { Id = 2, StartDate = new DateOnly(2023, 9, 1), EndDate = new DateOnly(2024, 4, 30), CurrentMatchday = 1, Competitions = new List<Competition> { competition2 } };
@@ -92,8 +102,8 @@ namespace Pomocnik_Rozgrywek.Data
             db.Matches.Add(match1);
 
             // Initialize Match Statistics
-            var matchStatistic1 = new MatchStatistic { Id = 1, CornerKicks = 0, FreeKicks = 0, GoalKicks = 0, Offsides = 0, Fouls = 0, BallPossession = 50, Saves = 0, ThrowIns = 0, Shots = 0, ShotsOnGoal = 0, ShotsOffGoal = 0, YellowCards = 0, RedCards = 0 };
-            var matchStatistic2 = new MatchStatistic { Id = 2, CornerKicks = 0, FreeKicks = 0, GoalKicks = 0, Offsides = 0, Fouls = 0, BallPossession = 50, Saves = 0, ThrowIns = 0, Shots = 0, ShotsOnGoal = 0, ShotsOffGoal = 0, YellowCards = 0, RedCards = 0 };
+            var matchStatistic1 = new MatchStatistic { Id = 1,  BallPossession = 50, YellowCards = 0, RedCards = 0 };
+            var matchStatistic2 = new MatchStatistic { Id = 2, BallPossession = 50,  YellowCards = 0, RedCards = 0 };
             db.MatchStatistics.AddRange(new[] { matchStatistic1, matchStatistic2 });
 
             // Assign statistics to the match

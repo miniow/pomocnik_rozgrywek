@@ -176,7 +176,7 @@
                 <Setter Property="Background"
                         Value="{StaticResource ButtonBackgroundColorHover}" />
                 <Setter Property="Foreground"
-                        Value="{StaticResource ButtonBackgroundColorHover}" />
+                        Value="{StaticResource ButtonForegroundColorHover}" />
             </Trigger>
         </Style.Triggers>
     </Style>

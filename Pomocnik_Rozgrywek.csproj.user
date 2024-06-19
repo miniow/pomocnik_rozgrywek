@@ -19,6 +19,9 @@
     <Compile Update="CustomControls\AddSeasonDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomControls\AddStatisticDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\AddTeamDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +73,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\AddSeasonDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CustomControls\AddStatisticDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CustomControls\AddTeamDialog.xaml">

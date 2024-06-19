@@ -1,31 +1,53 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="LabelMatchCardStyle"
+           TargetType="TextBlock">
+        <Setter Property="FontSize"
+                Value="40" />
+        <Setter Property="FontWeight"
+                Value="ExtraBlack" />
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="Foreground"
+                Value="{StaticResource mainColor2}" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="MinWidth"
+                Value="100" />
+    </Style>
     <DataTemplate x:Key="MatchCardTemplate">
-        <Border BorderBrush="Gray"
-                BorderThickness="1"
-                CornerRadius="5"
+        <Border BorderBrush="{StaticResource mainColor2}"
+                BorderThickness="4"
+                CornerRadius="10"
                 Padding="10"
                 Margin="5">
             <StackPanel>
                 <TextBlock Text="{Binding HomeTeam.Name}"
-                           FontWeight="Bold"
-                           FontSize="16" />
+                           Style="{StaticResource LabelMatchCardStyle}" />
                 <TextBlock Text="vs"
                            HorizontalAlignment="Center"
-                           FontSize="14"
-                           Margin="5,0" />
+                           FontSize="20" />
                 <TextBlock Text="{Binding AwayTeam.Name}"
-                           FontWeight="Bold"
-                           FontSize="16" />
+                           Style="{StaticResource LabelMatchCardStyle}" />
                 <TextBlock Text="{Binding utcDate, StringFormat='{}{0:yyyy-MM-dd HH:mm}'}"
                            FontStyle="Italic"
                            Margin="0,10,0,0" />
                 <TextBlock Text="{Binding Venue}"
+                           Style="{StaticResource LabelMatchCardStyle}"
+                           FontStyle="Italic"
+                           FontSize="18"
+                           FontWeight="Medium"
                            Margin="0,0,0,5" />
                 <TextBlock Text="Status:"
                            FontWeight="Bold"
                            Margin="0,10,0,0" />
                 <TextBlock Text="{Binding Status}" />
+                <Button Content="Add Statistics"
+                        Style="{StaticResource addButton}"
+                        Command="{Binding DataContext.AddStatisticsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                        CommandParameter="{Binding}" />
             </StackPanel>
         </Border>
     </DataTemplate>

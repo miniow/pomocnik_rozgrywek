@@ -102,6 +102,25 @@ namespace Pomocnik_Rozgrywek.Services
                 throw new ArgumentNullException(nameof(match));
             }
 
+            if(match.AwayStatistic == null)
+            {
+                throw new NullReferenceException(nameof(match.AwayStatistic));
+            }
+            if (match.HomeStatistic == null)
+            {
+                throw new NullReferenceException(nameof(match.HomeStatistic));
+            }
+
+            if(match.HomeStatistic.Goals > match.AwayStatistic.Goals)
+            {
+                match.Winer = match.HomeTeam;
+            }
+
+            if(match.HomeStatistic.Goals < match.AwayStatistic.Goals)
+            {
+                match.Winer = match.AwayTeam;
+            }
+            match.Status = MatchStatus.ENDED;
             return await _matchRepository.EditAsync(match);
         }
 

@@ -9,7 +9,7 @@ namespace Pomocnik_Rozgrywek.Models
     public class Match
     {
         public Competition Competition { get; set; }
-
+        public Team Winer { get; set; }
         public int Id { get; set; }
         public DateTime UtcDate { get; set; }
         public MatchStatus Status { get; set; }

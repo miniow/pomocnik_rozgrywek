@@ -25,6 +25,8 @@ namespace Pomocnik_Rozgrywek.ViewModels
             return values;
         }
     }
+
+
     public class MatchesViewModel : ViewModelBase
     {
         private readonly IMatchService _matchService;
@@ -68,6 +70,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand UpdateMatchCommand { get; }
         public ICommand DeleteMatchCommand { get; }
         public ICommand ScheduleMatchesCommand { get; }
+        public ICommand AddStatisticsCommand { get; }
         public MatchesViewModel() {
             _matchService = new MatchService();
             _competitionService = new CompetitionService();
@@ -77,11 +80,25 @@ namespace Pomocnik_Rozgrywek.ViewModels
             UpdateMatchCommand = new ViewModelCommand(async param => await UpdateMatch(param as Match));
             DeleteMatchCommand = new ViewModelCommand(async param => await DeleteMatch(param as Match));
             ScheduleMatchesCommand = new ViewModelCommand(async param => await ScheduleMatches());
-
+            AddStatisticsCommand = new ViewModelCommand(param => AddStatistics(param as Match));
             Stages = EnumHelper.GetEnumValues<CompetitionStage>();
             LoadMatches();
         }
+        private void AddStatistics(Match match)
+        {
+            if (match == null) return;
 
+            var addStatisticsDialog = new AddStatisticDialog(match);
+            if (addStatisticsDialog.ShowDialog() == true)
+            {
+                var homeStatistics = addStatisticsDialog.HomeStatistic;
+                var awayStatistic = addStatisticsDialog.AwayStatistic;
+                match.HomeStatistic = homeStatistics;
+                match.AwayStatistic = awayStatistic;
+                _matchService.UpdateMatchAsync(match);
+                LoadMatches();  // Reload matches to reflect the changes
+            }
+        }
         private async Task ScheduleMatches()
         {
             var competitions = new ObservableCollection<Competition>(await _competitionService.GetAllCompetitionsAsync());
