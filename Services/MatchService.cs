@@ -1,6 +1,5 @@
 ﻿using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -13,14 +12,13 @@ namespace Pomocnik_Rozgrywek.Services
     public class MatchService : IMatchService
     {
         private readonly IMatchRepository _matchRepository;
-        private readonly ICompetitonRepository _competitonRepository;
+        private readonly ICompetitionRepository _competitonRepository;
         private readonly ITeamRepository _teamRepository;
         public MatchService()
         {
-            var db = new Data.ApplicationDbContext();
-            _matchRepository = new MatchRepository(db);
-            _competitonRepository = new CompetitionRepository(db);
-            _teamRepository = new TeamRepository(db);
+            _matchRepository = new MatchRepository();
+            _competitonRepository = new CompetitionRepository();
+            _teamRepository = new TeamRepository();
         }
         public async Task RecordMatchStatistics(int matchId, MatchStatistic homeStatistic, MatchStatistic awayStatistic)
         {
@@ -109,16 +107,34 @@ namespace Pomocnik_Rozgrywek.Services
 
         public async Task<IEnumerable<Match>> ScheduleMatches(Competition competition)
         {
-            var numberOfTeams = await _competitonRepository.GetNumberOfTeamsInCompetitonAsync(competition);
+            var numberOfTeams = await _competitonRepository.GetNumberOfTeamsInCompetitionAsync(competition);
             if (!IsPowerOfTwo(numberOfTeams))
             {
                 throw new ArgumentException("To low number of teams");
+            }
+            if(numberOfTeams > 8)
+            {
+                throw new ArgumentException("To much number of teams");
+
             }
             var competitionDTO = await _competitonRepository.GetByIdAsync(competition.Id);
             var teams = competitionDTO.Teams.ToList();
             var matches = new List<Match>();
             var rng = new Random();
             teams = teams.OrderBy(t => rng.Next()).ToList();
+            CompetitionStage stage;
+            if (numberOfTeams == 2) {
+                stage = CompetitionStage.FINAL;
+            }
+            else if(numberOfTeams == 4)
+            {
+                stage = CompetitionStage.SEMI_FINALS;
+            }
+            else
+            {
+                stage = CompetitionStage.QUARTER_FINALS;
+            }
+            
             for (int i = 0; i < teams.Count; i += 2)
             {
                 var match = new Match
@@ -126,20 +142,29 @@ namespace Pomocnik_Rozgrywek.Services
                     Competition = competition,
                     HomeTeam = teams[i],
                     AwayTeam = teams[i + 1],
-                    utcDate = DateTime.UtcNow,
+                    UtcDate = DateTime.UtcNow,
                     Status = MatchStatus.SCHEDULED,
                     Venue = teams[i].Venue,
-                    Matchday = competition.CurrentSeason.CurrentMatchday,
-                    Stage = competition.CurrentSeason.Stages
+                    
+                    
                 };
+                if (competition.CurrentSeason != null)
+                {
+                    match.Stage = competition.CurrentSeason.Stages;
+                    match.Matchday = competition.CurrentSeason.CurrentMatchday;
+                }
+                    
 
                 matches.Add(match);
             }
 
-
+            await _matchRepository.AddMatchesAsync(matches);
             return matches;
         }
-        public bool IsPowerOfTwo(int number)
+
+
+
+        private static bool IsPowerOfTwo(int number)
         {
             return (number > 0) && ((number & (number - 1)) == 0);
         }

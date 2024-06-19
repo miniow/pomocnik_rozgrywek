@@ -16,6 +16,9 @@
     <Compile Update="CustomControls\AddPersonDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CustomControls\AddSeasonDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CustomControls\AddTeamDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -66,6 +69,9 @@
     <Page Update="CustomControls\AddPersonDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="CustomControls\AddSeasonDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="CustomControls\AddTeamDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -88,6 +94,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\DataGridStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\ListViewStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\MatchCard.xaml">

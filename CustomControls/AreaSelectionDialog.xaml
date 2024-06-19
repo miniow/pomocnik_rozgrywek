@@ -5,20 +5,38 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomocnik_Rozgrywek.CustomControls"
         mc:Ignorable="d"
-        Title="AreaSelectionDialog"
+        Title="Area Selection"
+        MinHeight="450"
+        MinWidth="400"
+        Width="400"
         Height="450"
-        Width="800">
-    <Grid>
-        <ListBox x:Name="AreasListBox"
-                 DisplayMemberPath="Name"
-                 Margin="10"
-                 SelectionMode="Single" />
-        <Button Content="OK"
-                Width="75"
-                Height="30"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Margin="10"
-                Click="OkButton_Click" />
-    </Grid>
+        WindowStyle="None"
+        MouseDown="Window_MouseDown">
+    <StackPanel Margin="20">
+        <TextBlock Text="Select an Area"
+                   FontSize="16"
+                   FontWeight="Medium"
+                   FontFamily="Monsterrat"
+                   Margin="0 20 0 0"
+                   HorizontalAlignment="Left" />
+
+        <ListView x:Name="AreasListView"
+                  DisplayMemberPath="Name"
+                  Style="{StaticResource StyledListView}"
+                  SelectionMode="Single"
+                  ItemContainerStyle="{StaticResource StyledListViewItem}">
+        </ListView>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+            <Button Content="OK"
+                    Style="{StaticResource DialogButtonStyle}"
+                    Click="OkButton_Click" />
+            <Button Content="Cancel"
+                    Style="{StaticResource DialogButtonStyle}"
+                    Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
+
 </Window>

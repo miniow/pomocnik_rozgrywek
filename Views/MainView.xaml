@@ -81,7 +81,7 @@
                                    RadiusX="20"
                                    RadiusY="20">
                             <Rectangle.Fill>
-                                <ImageBrush ImageSource="D:\VisualStudioProjects\Pomocnik_Rozgrywek\Images\logo.png" />
+                                <ImageBrush ImageSource="/Images/logo.png" />
                             </Rectangle.Fill>
                         </Rectangle>
                         <TextBlock Text="Pomocnik Rozgrywek"

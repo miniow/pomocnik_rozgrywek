@@ -17,19 +17,13 @@
                     Value="White" />
         </Style>
     </Window.Style>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="30" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="30" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
-            <Button Cursor="Hand"
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Style="{StaticResource controlButton}"
+                    Cursor="Hand"
                     VerticalAlignment="Center"
                     Click="Button_Click"
-                    HorizontalAlignment="Right"
-                    Margin="225 0 10 0"
                     Width="30"
                     Height="30">
                 <TextBlock Text="X"
@@ -37,119 +31,60 @@
                            HorizontalAlignment="Center" />
             </Button>
         </StackPanel>
+
         <TextBlock Text="Adding New Competition"
-                   Grid.Row="1"
-                   Margin="20 0 0 0"
+                   Margin="0 20 0 0"
                    FontSize="16"
                    FontWeight="Medium"
                    FontFamily="Monsterrat"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Left" />
-        <StackPanel Grid.Row="2">
-            <Grid Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="0"
-                           Grid.Column="0"
-                           Text="Name:"
-                           HorizontalAlignment="Right"
-                           Margin="5"
-                           Padding="5" />
-                <Border Grid.Row="0"
-                        Grid.Column="1"
-                        BorderBrush="Gray"
-                        Height="25"
-                        BorderThickness="1"
-                        CornerRadius="14">
-                    <TextBox Style="{StaticResource AddFieldTextBox}"
-                             x:Name="name_tb"
-                             Margin="3" />
-                </Border>
+        <TextBlock Text="Name:"
+                   Style="{StaticResource LabelStyle}" />
 
-                <TextBlock Grid.Row="1"
-                           Grid.Column="0"
-                           Text="Code:"
-                           HorizontalAlignment="Right"
-                           Margin="5"
-                           Padding="5" />
-                <Border Grid.Row="1"
-                        Grid.Column="1"
-                        BorderBrush="Gray"
-                        Height="25"
-                        BorderThickness="1"
-                        CornerRadius="14">
-                    <TextBox Style="{StaticResource AddFieldTextBox}"
-                             x:Name="code_tb"
-                             Margin="3" />
-                </Border>
+        <TextBox Style="{StaticResource InputStyle}"
+                 x:Name="name_tb"
+                 Margin="3" />
 
-                <TextBlock Grid.Row="2"
-                           Grid.Column="0"
-                           Text="Type:"
-                           HorizontalAlignment="Right"
-                           Margin="5"
-                           Padding="5" />
-                <Border Grid.Row="2"
-                        Grid.Column="1"
-                        BorderBrush="Gray"
-                        Height="25"
-                        BorderThickness="1"
-                        CornerRadius="14">
-                    <TextBox Style="{StaticResource AddFieldTextBox}"
-                             x:Name="type_tb"
-                             Margin="3" />
-                </Border>
+        <TextBlock Text="Code:"
+                   Style="{StaticResource LabelStyle}" />
 
-                <TextBlock Grid.Row="3"
-                           Grid.Column="0"
-                           Text="Emblem:"
-                           HorizontalAlignment="Right"
-                           Margin="5"
-                           Padding="5" />
-                <StackPanel Grid.Row="3"
-                            Grid.Column="1"
-                            Orientation="Horizontal">
-                    <TextBox Width="250"
-                             x:Name="emblem_tb"
-                             Margin="3" />
-                    <Button Content="Browse"
-                            Width="75"
-                            Click="BrowseButton_Click"
-                            Margin="3" />
-                </StackPanel>
+        <TextBox Style="{StaticResource InputStyle}"
+                 x:Name="code_tb"
+                 Margin="3" />
 
-                <TextBlock Grid.Row="4"
-                           Grid.Column="0"
-                           Foreground="Red"
-                           FontWeight="Medium"
-                           Text="{Binding ErrorMessage}"
-                           Margin="5" />
+        <TextBlock Text="Type:"
+                   Style="{StaticResource LabelStyle}" />
 
-                <StackPanel Grid.Row="6"
-                            Grid.Column="1"
-                            Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
-                    
-                </StackPanel>
-                
-            </Grid>
-            <Button x:Name="btnSave"
-                    Content="Save"
-                    Margin="5"
-                    Click="SaveButton_Click"
-                    Style="{StaticResource addButton}">
-            </Button>
+        <TextBox Style="{StaticResource InputStyle}"
+                 x:Name="type_tb"
+                 Margin="3" />
+
+        <TextBlock Text="Emblem:"
+                   Style="{StaticResource LabelStyle}" />
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TextBox x:Name="emblem_tb"
+                     Style="{StaticResource InputStyle}" />
+            <Button Content="Browse"
+                    Style="{StaticResource addButton}"
+                    Click="BrowseButton_Click"
+                    Margin="3" />
         </StackPanel>
-    </Grid>
+
+        <TextBlock Foreground="Red"
+                   FontWeight="Medium"
+                   Text="{Binding ErrorMessage}"
+                   Margin="5" />
+
+        <Button x:Name="btnSave"
+                Content="Save"
+                Margin="5"
+                Click="SaveButton_Click"
+                Style="{StaticResource addButton}"
+                HorizontalAlignment="Right">
+        </Button>
+    </StackPanel>
 </Window>

@@ -42,14 +42,31 @@ namespace Pomocnik_Rozgrywek.Views
 
         private void addChildAreaClick(object sender, RoutedEventArgs e)
         {
-            var viewmodel = (AreaViewModel)DataContext;
-            viewmodel.AddChildAreaCommand.Execute(null);
+            var menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                var parentArea = menuItem.DataContext as Area;
+                var viewModel = (AreaViewModel)DataContext;
+                if (viewModel != null && parentArea != null)
+                {
+                    viewModel.AddChildAreaCommand.Execute(parentArea);
+                }
+            }
         }
 
         private void deleteAreaClick(object sender, RoutedEventArgs e)
         {
-            var viewmodel = (AreaViewModel)DataContext;
-            viewmodel.DeleteAreaCommand.Execute(null);
+            var menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                var area = menuItem.DataContext as Area;
+                var viewModel = (AreaViewModel)DataContext;
+                if (viewModel != null && area != null)
+                {
+                    viewModel.DeleteAreaCommand.Execute(area);
+
+                }
+            }
         }
     }
 }

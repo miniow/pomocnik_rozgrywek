@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/Styles/TreeViewStyles.xaml" />
                 <ResourceDictionary Source="/Styles/MatchCard.xaml" />
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="/Styles/ListViewStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
            

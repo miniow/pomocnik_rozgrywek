@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Pomocnik_Rozgrywek.CustomControls;
 
 namespace Pomocnik_Rozgrywek.ViewModels
 {
@@ -27,6 +28,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
     public class MatchesViewModel : ViewModelBase
     {
         private readonly IMatchService _matchService;
+        private readonly ICompetitionService _competitionService;
         private ObservableCollection<Match> _matches;
         private Match _selectedMatch;
         private CompetitionStage _selectedStage;
@@ -65,17 +67,36 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand AddMatchCommand { get; }
         public ICommand UpdateMatchCommand { get; }
         public ICommand DeleteMatchCommand { get; }
+        public ICommand ScheduleMatchesCommand { get; }
         public MatchesViewModel() {
             _matchService = new MatchService();
+            _competitionService = new CompetitionService();
 
             LoadMatchesCommand = new ViewModelCommand(async param => await LoadMatches());
             AddMatchCommand = new ViewModelCommand(async param => await AddMatch(param as Match));
             UpdateMatchCommand = new ViewModelCommand(async param => await UpdateMatch(param as Match));
             DeleteMatchCommand = new ViewModelCommand(async param => await DeleteMatch(param as Match));
+            ScheduleMatchesCommand = new ViewModelCommand(async param => await ScheduleMatches());
 
             Stages = EnumHelper.GetEnumValues<CompetitionStage>();
             LoadMatches();
         }
+
+        private async Task ScheduleMatches()
+        {
+            var competitions = new ObservableCollection<Competition>(await _competitionService.GetAllCompetitionsAsync());
+            CompetitonSelectDialog csd = new CompetitonSelectDialog(competitions);
+            if (csd.ShowDialog() == true)
+            {
+                var competition = csd.SelectedCompetition;
+                var scheduledMatches = await _matchService.ScheduleMatches(competition);
+                foreach (var match in scheduledMatches)
+                {
+                    Matches.Add(match);
+                }
+            }
+        }
+
         private async Task LoadMatches()
         {
             Matches = new ObservableCollection<Match>(await _matchService.GetAllMatchsAsync());

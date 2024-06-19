@@ -1,7 +1,6 @@
 ﻿using Pomocnik_Rozgrywek.Data;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace Pomocnik_Rozgrywek.Services
     {
         private readonly ISeasonRepository _seasonRepository;
         public SeasonService() {
-            _seasonRepository = new SeasonRepository(new Data.ApplicationDbContext());
+            _seasonRepository = new SeasonRepository();
         }
         public async Task<Season> CreateSeasonAsync(Season season)
         {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
+
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,8 +18,8 @@ namespace Pomocnik_Rozgrywek.Services
         private readonly ITeamRepository _teamRepository;
         public PersonService()
         {
-            _personRepository = new PersonRepository(new Data.ApplicationDbContext());
-            _teamRepository = new TeamRepository(new Data.ApplicationDbContext());
+            _personRepository = new PersonRepository();
+            _teamRepository = new TeamRepository();
         }
         public async Task<Person> CreatePersonAsync(Person player)
         {

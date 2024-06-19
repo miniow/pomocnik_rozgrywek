@@ -15,7 +15,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
 {
     public class AreaViewModel : ViewModelBase
     {
-        private GlobalMessageService messageService;
+        private GlobalMessageService _messageService;
         private readonly IAreaService _areaService;
         private ObservableCollection<Area> _areas;
         private Area _selectedArea;
@@ -56,14 +56,13 @@ namespace Pomocnik_Rozgrywek.ViewModels
         public ICommand DeleteAreaCommand { get; }
         public AreaViewModel()
         {
-
-            messageService = GlobalMessageService.GetMessageService();
-            AddChildAreaCommand = new ViewModelCommand(async param => await AddChildArea());
+            _messageService = GlobalMessageService.GetMessageService();
+            _areaService = new AreaService();
+            AddChildAreaCommand = new ViewModelCommand(async param => await AddChildArea(param as Area));
             LoadAreasCommand = new ViewModelCommand(async param => await LoadAreas());
             AddAreaCommand = new ViewModelCommand(async param => await AddArea(param as Area));
             UpdateAreaCommand = new ViewModelCommand(async param => await UpdateArea(param as Area));
             DeleteAreaCommand = new ViewModelCommand(async param => await DeleteArea(param as Area));
-            _areaService = new AreaService();
 
             LoadAreas();
         }
@@ -73,24 +72,34 @@ namespace Pomocnik_Rozgrywek.ViewModels
             try
             {
                 await _areaService.DeleteAreaAsync(SelectedArea.Id);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                messageService.AddMessage(new ErrorMessage("Cannot delete Area" + ex.ToString()));
+                _messageService.AddMessage(new ErrorMessage("Cannot delete Area" + ex.ToString()));
                 return;
             }
-            messageService.AddMessage(new SuccessMessage("Area deleted succesfully"));
+            _messageService.AddMessage(new SuccessMessage("Area deleted succesfully"));
             await LoadAreas();
         }
 
         private async Task UpdateArea(Area? area)
         {
-            await _areaService.UpdateAreaAsync(SelectedArea);
+            try
+            {
+                await _areaService.UpdateAreaAsync(SelectedArea);
+            }
+            catch (Exception ex)
+            {
+                _messageService.AddMessage(new ErrorMessage("Cannot update Area" + ex.ToString()));
+            }
+            _messageService.AddMessage(new ErrorMessage("Area updated succesfully"));
+
             await LoadAreas();
         }
 
         private async Task AddArea(Area? area)
         {
-            if(SelectedArea.ChildAreas == null)
+            if (SelectedArea.ChildAreas == null)
             {
                 SelectedArea.ChildAreas = new ObservableCollection<Area>();
             }
@@ -100,12 +109,21 @@ namespace Pomocnik_Rozgrywek.ViewModels
             await _areaService.UpdateAreaAsync(SelectedArea);
         }
 
-        private async Task AddChildArea()
+        private async Task AddChildArea(Area? area)
         {
+            if (area == null)
+            {
+                area = SelectedArea;
+            }
+            if (area == null)
+            {
+                _messageService.AddMessage(new ValidationMessage("Problemn have occured durring adding.Chose correct area"));
+            }
             var addAreaDialog = new AddAreaDialog();
             addAreaDialog.OnAreaCreated += async (newArea) =>
             {
-                await AddArea(newArea);
+                await _areaService.CreateChildAreaAsync(area, newArea);
+                await LoadAreas();
             };
             addAreaDialog.Show();
             return;

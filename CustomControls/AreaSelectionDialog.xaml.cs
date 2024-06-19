@@ -27,12 +27,18 @@ namespace Pomocnik_Rozgrywek.CustomControls
         {
             InitializeComponent();
             Areas = areas;
-            AreasListBox.ItemsSource = Areas;
+            AreasListView.ItemsSource = Areas;
         }
-
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedArea = AreasListBox.SelectedItem as Area;
+            SelectedArea = AreasListView.SelectedItem as Area;
             if (SelectedArea != null)
             {
                 DialogResult = true;
@@ -42,6 +48,11 @@ namespace Pomocnik_Rozgrywek.CustomControls
             {
                 MessageBox.Show("Please select a team.");
             }
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
         }
     }
 }

@@ -26,12 +26,18 @@ namespace Pomocnik_Rozgrywek.CustomControls
         public CompetitonSelectDialog(ObservableCollection<Competition> competitions)
         {
             InitializeComponent();
-            CompetitionsListBox.ItemsSource = competitions;
+            CompetitionsLisView.ItemsSource = competitions;
         }
-
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
+        }
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            SelectedCompetition = CompetitionsListBox.SelectedItem as Competition;
+            SelectedCompetition = CompetitionsLisView.SelectedItem as Competition;
             if (SelectedCompetition != null)
             {
                 DialogResult = true;
@@ -41,6 +47,12 @@ namespace Pomocnik_Rozgrywek.CustomControls
             {
                 MessageBox.Show("Please select a competition.");
             }
+        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Implement the logic to handle the Cancel button click
+            DialogResult = false;
+            Close();
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Data;
 using System.Windows;
 using Pomocnik_Rozgrywek.Data;
 using Microsoft.EntityFrameworkCore;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Repositories;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using Pomocnik_Rozgrywek.Services;
@@ -22,20 +21,16 @@ namespace Pomocnik_Rozgrywek
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            var db = Database.Instance;
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
         }
 
         private void ConfigureServices(ServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>();
-
-            services.AddScoped<ICompetitonRepository, CompetitionRepository>();
             services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
-          //  services.AddScoped<ICoachRepository, CoachRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
 
@@ -47,7 +42,7 @@ namespace Pomocnik_Rozgrywek
 
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
-            DbInitializer.Initialize(new ApplicationDbContext());
+            DatabaseInitializer.Initialize();
             mainView = new MainView();
             mainView.Show();
         }

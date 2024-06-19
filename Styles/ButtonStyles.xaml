@@ -120,7 +120,23 @@
         <Setter Property="Width" Value="9"/>
         <Setter Property="Height" Value="9"/>
     </Style>
-
+    
+    <Style x:Key="DialogButtonStyle"
+           TargetType="Button">
+        <Setter Property="Width"
+                Value="75" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="Margin"
+                Value="10" />
+        <Setter Property="Background"
+                Value="{StaticResource ButtonBackgroundColor}" />
+        <Setter Property="Foreground"
+                Value="{StaticResource ButtonForegroundColor}" />
+        <Setter Property="FontWeight"
+                Value="Bold" />
+    </Style>
+    
     <Style x:Key="addButton"
            TargetType="Button">
         <Setter Property="Background"

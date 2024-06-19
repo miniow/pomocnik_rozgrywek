@@ -16,7 +16,7 @@ namespace Pomocnik_Rozgrywek.Models
         public string? Position { get; set; }
         public int? ShirtNumber { get; set; }
         public DateTime? LastUpdated { get; set; }
-        public int? TeamId { get; set; }
+        public int? CurrentTeamId { get; set; }
         public Team? CurrentTeam { get; set; }
     }
 }

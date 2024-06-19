@@ -1,7 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,15 +13,15 @@ namespace Pomocnik_Rozgrywek.Services
 {
     public class CompetitionService : ICompetitionService
     {
-        private readonly ICompetitonRepository _competitionRepository;
+        private readonly ICompetitionRepository _competitionRepository;
         private readonly IAreaRepository _areaRepository;
         private readonly ISeasonRepository _seasonRepository;
 
         public CompetitionService()
         {
-            _competitionRepository = new CompetitionRepository(new Data.ApplicationDbContext());
-            _areaRepository = new AreaRepository(new Data.ApplicationDbContext());
-            _seasonRepository = new SeasonRepository(new Data.ApplicationDbContext());
+            _competitionRepository = new CompetitionRepository();
+            _areaRepository = new AreaRepository();
+            _seasonRepository = new SeasonRepository();
         }
 
         public async Task AddToArea(Competition competition, Area area)

@@ -43,9 +43,12 @@
 
     <!--Button Colors-->
     <SolidColorBrush x:Key="ButtonForegroundColor" Color="#0540F2"/>
-    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FFFFFF"/>
-    <SolidColorBrush x:Key="ButtonBackgroundColorHover" Color="#EFEFEF"/>
-    <SolidColorBrush x:Key="ButtonForegroundColorHover" Color="#0540FF"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColor"
+                     Color="#eeeeee"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorHover"
+                     Color="#0540F2"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorHover"
+                     Color="#FeFeFe"/>
     
     <!--Icon Colors-->
     <SolidColorBrush x:Key="IconForegroundColor" Color="#0540F2"/>

@@ -11,7 +11,7 @@ namespace Pomocnik_Rozgrywek.Models
         public Competition Competition { get; set; }
 
         public int Id { get; set; }
-        public DateTime utcDate { get; set; }
+        public DateTime UtcDate { get; set; }
         public MatchStatus Status { get; set; }
         public int Minute { get; set; }
         public int InjuryTime { get; set; }

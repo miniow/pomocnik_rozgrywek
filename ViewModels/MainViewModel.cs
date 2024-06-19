@@ -40,7 +40,7 @@ namespace Pomocnik_Rozgrywek.ViewModels
             ShowPearsonViewCommand = new ViewModelCommand(ExecuteShowPearsonViewCommand);
             ShowMatchViewCommand = new ViewModelCommand(ExecuteShowMatchViewCommand);
             ShowSeasonViewCommand = new ViewModelCommand(ExecuteShowSeasonViewCommand);
-
+            ShowHomeViewCommand.Execute(this);
         }
 
         private void ExecuteShowSeasonViewCommand(object obj)

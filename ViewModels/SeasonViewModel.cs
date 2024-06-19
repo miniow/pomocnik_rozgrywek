@@ -1,12 +1,14 @@
 ﻿using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
+using Pomocnik_Rozgrywek.CustomControls;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Services;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Pomocnik_Rozgrywek.ViewModels
@@ -60,12 +62,18 @@ namespace Pomocnik_Rozgrywek.ViewModels
                 OnPropertyChanged(nameof(SeasonLabels));
             }
         }
-
+        public ICommand AddSeasonCommand { get; }
+        public ICommand UpdateSeasonCommand { get; }
+        public ICommand DeleteSeasonCommand { get; }
         public SeasonViewModel()
         {
             _seasonService = new SeasonService();
             LoadSeasons();
             Formatter = value => DateTime.FromOADate(value).ToString("dd MMM yyyy");
+
+            AddSeasonCommand = new ViewModelCommand(async param => await AddSeason());
+            UpdateSeasonCommand = new ViewModelCommand(async param => await UpdateSeason());
+            DeleteSeasonCommand = new ViewModelCommand(async param => await DeleteSeason());
         }
 
         private async void LoadSeasons()
@@ -89,6 +97,31 @@ namespace Pomocnik_Rozgrywek.ViewModels
                     }
                 });
             }
+        }
+
+        private async Task AddSeason()
+        {
+            var addSeasonDialog = new AddSeasonDialog();
+            if (addSeasonDialog.ShowDialog() == true)
+            {
+                var newSeason = addSeasonDialog.NewSeason;
+                await _seasonService.CreateSeasonAsync(newSeason);
+                LoadSeasons();
+            }
+        }
+
+        private async Task UpdateSeason()
+        {
+            if (SelectedSeason == null) return;
+            await _seasonService.UpdateSeasonAsync(SelectedSeason);
+            LoadSeasons();
+        }
+
+        private async Task DeleteSeason()
+        {
+            if (SelectedSeason == null) return;
+            await _seasonService.DeleteSeasonAsync(SelectedSeason.Id);
+            LoadSeasons();
         }
     }
 }

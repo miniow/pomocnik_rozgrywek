@@ -22,6 +22,7 @@ namespace Pomocnik_Rozgrywek.Models
         public string? Venue { get; set; }
         public ICollection<Competition>? RunningCompetitions { get; set; }
         public ICollection<Person>? Squad { get; set; }
+        public int? CoachId { get; set; }
         public Person? Coach { get; set; }
         public DateTime LastUpdated { get; set; }
     }

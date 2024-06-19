@@ -1,7 +1,6 @@
 ﻿using Microsoft.Identity.Client;
 using Pomocnik_Rozgrywek.Models;
 using Pomocnik_Rozgrywek.Repositories;
-using Pomocnik_Rozgrywek.Repositories.Interfaces;
 using Pomocnik_Rozgrywek.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,12 +14,11 @@ namespace Pomocnik_Rozgrywek.Services
     {
         private readonly ITeamRepository _teamRepository;
         private readonly IPersonRepository _personRepository;
-        private readonly ICompetitonRepository _competitionRepository;
+        private readonly ICompetitionRepository _competitionRepository;
         public TeamService() {
-            var db = new Data.ApplicationDbContext();
-            _teamRepository = new TeamRepository(db);
-            _personRepository = new PersonRepository(db);
-            _competitionRepository = new CompetitionRepository(db);
+            _teamRepository = new TeamRepository();
+            _personRepository = new PersonRepository();
+            _competitionRepository = new CompetitionRepository();
         }
         public async Task<Team> GetTeamByIdAsync(int id)
         {
@@ -112,9 +110,6 @@ namespace Pomocnik_Rozgrywek.Services
             {
                 competitionDTO.Teams.Add(teamDTO);
             }
-
-            _teamRepository.AttachEntity(teamDTO);
-            _competitionRepository.AttachEntity(competitionDTO);
 
             await _teamRepository.EditAsync(teamDTO);
             await _competitionRepository.EditAsync(competitionDTO);

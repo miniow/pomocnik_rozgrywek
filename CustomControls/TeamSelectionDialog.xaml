@@ -5,18 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pomocnik_Rozgrywek.CustomControls"
         mc:Ignorable="d"
-        Title="TeamSelectionDialog" Height="300" Width="300">
-    <Grid>
-         <ListBox x:Name="TeamsListBox"
-                 DisplayMemberPath="Name"
-                 Margin="10"
-                 SelectionMode="Single" />
-        <Button Content="OK"
-                Width="75"
-                Height="30"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                Margin="10"
-                Click="OkButton_Click" />
-    </Grid>
+        Title="Team Selection"
+        MinHeight="450"
+        MinWidth="400"
+        Width="400"
+        Height="450"
+        WindowStyle="None">
+    <StackPanel Margin="20">
+        <TextBlock Text="Select a Team"
+                   Style="{StaticResource LabelStyle}"
+                   HorizontalAlignment="Left" />
+
+        <ListView x:Name="TeamsListBox"
+                  DisplayMemberPath="Name"
+                  Style="{StaticResource StyledListView}"
+                  ItemContainerStyle="{StaticResource StyledListViewItem}"
+                  SelectionMode="Single" />
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+            <Button Content="OK"
+                    Style="{StaticResource DialogButtonStyle}"
+                    Click="OkButton_Click" />
+            <Button Content="Cancel"
+                    Style="{StaticResource DialogButtonStyle}"
+                    Click="CancelButton_Click" />
+        </StackPanel>
+    </StackPanel>
 </Window>

@@ -12,9 +12,7 @@ namespace Pomocnik_Rozgrywek.Models
         FINAL,
         THIRD_PLACE,
         SEMI_FINALS,
-        QUARTER_FINALS,
-        GROUP_STAGE,
-        REGULAR_SEASON, 
+        QUARTER_FINALS
     }
     public enum MatchStatus
     {

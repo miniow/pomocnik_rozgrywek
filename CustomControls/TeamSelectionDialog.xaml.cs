@@ -42,5 +42,10 @@ namespace Pomocnik_Rozgrywek.CustomControls
                 MessageBox.Show("Please select a team.");
             }
         }
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
     }
 }

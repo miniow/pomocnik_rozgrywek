@@ -15,10 +15,15 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
         <lvc:CartesianChart Grid.Row="0"
+                            Grid.ColumnSpan="2"
                             Series="{Binding GanttSeries}">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Seasons"
@@ -31,23 +36,45 @@
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <ListView ItemsSource="{Binding Seasons}"
+                      SelectedItem="{Binding SelectedSeason}"
+                      Style="{StaticResource StyledListView}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
 
-        <ListBox Grid.Row="1"
-                 ItemsSource="{Binding Seasons}"
-                 SelectedItem="{Binding SelectedSeason}"
-                 >
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Id}" />
-                        <TextBlock Text="{Binding StartDate}" />
-                        <TextBlock Text="{Binding EndDate}" />
-                        <TextBlock Text="{Binding CurrentMatchday}" />
-                        <TextBlock Text="{Binding Winner.Name}" />
-                        <TextBlock Text="{Binding Stages}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                            <TextBlock Text="{Binding StartDate}"
+                                       Style="{StaticResource LabelStyle}"  />
+                            <TextBlock Text="{Binding EndDate}"
+                                       Style="{StaticResource LabelStyle}" />
+                            <TextBlock Text="{Binding CurrentMatchday}"
+                                       Style="{StaticResource LabelStyle}" />
+                            <TextBlock Text="{Binding Winner.Name}"
+                                       Style="{StaticResource LabelStyle}" />
+                            <TextBlock Text="{Binding Stages}"
+                                       Style="{StaticResource LabelStyle}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Right"
+                    Margin="5" Grid.Row="1"
+                    Grid.Column="1">
+            <Button Content="Add Season"
+                    Command="{Binding AddSeasonCommand}"
+                    Style="{StaticResource DialogButtonStyle}" />
+            <Button Content="Update Season"
+                    Command="{Binding UpdateSeasonCommand}"
+                    Style="{StaticResource DialogButtonStyle}"
+                    IsEnabled="{Binding SelectedSeason}" />
+            <Button Content="Delete Season"
+                    Command="{Binding DeleteSeasonCommand}"
+                    Style="{StaticResource DialogButtonStyle}"
+                    IsEnabled="{Binding SelectedSeason}" />
+        </StackPanel>
+
     </Grid>
 </UserControl>
